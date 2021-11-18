@@ -1,0 +1,27 @@
+{
+  "name": "stayAwake",
+  "version": "1.0.0",
+  "description": "Node.js backend for stayAwake App",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "IFT717"
+  ],
+  "author": "Thomas Cenci",
+  "license": "",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.6",
+    "winston": "^3.3.3"
+  }
+}
