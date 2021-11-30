@@ -63,7 +63,7 @@ const infoLogger = loggers.get('infoLogger');
 //Connecting to MongoDB (async/await approach)
 const connectDb = async () => {
 
-  const uri = "mongodb+srv://ThomasC:ift717@ift717.bxutg.mongodb.net/Tasks?retryWrites=true&w=majority";
+  const uri = "mongodb+srv://ThomasC:ift717@ift717.bxutg.mongodb.net/ift717-projet?retryWrites=true&w=majority";
 
     await mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology : true}).then(
         () => {
@@ -80,7 +80,7 @@ const connectDb = async () => {
   connectDb().catch(error => console.error(error))
 
   
-//Accessing the routes for the x
+//Accessing the routes for the tasks
 const taskRoutes = require('./routes/task');
 
 // //Accessing the routes for the x

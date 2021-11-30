@@ -1,14 +1,25 @@
 function createTask(req, res) {
     let Task = require('../models/task');
+
+    let startDate = req.body.startDate;
+    let endDate = req.body.endDate;
+
+    // If no endDate, adds 1 hour
+    if (!req.body.endDate) {
+        endDate = startDate
+        endDate.setHours(startDate.getHours() + 1);
+    }
+
     let newTask = Task ({
-        Title: req.body.Title,
-        Date : req.body.Date,
-        Duration : req.body.Duration,
-        Location : req.body.Location,
-        Description : req.body.Description,
-        Priority : req.body.Priority
+        title: req.body.title,
+        startDate : startDate,
+        endDate : endDate,
+        location : req.body.location,
+        description : req.body.description,
+        priority : req.body.priority
     });
   
+    console.log(newTask)
     newTask.save()
     .then((savedTask) => {
 
@@ -38,7 +49,7 @@ function readTask(req, res) {
     let Task = require("../models/task");
 
     Task.findById({_id : req.params.id})
-    .populate('Location')
+    .populate('location')
     .then((task) => {
         res.status(200).json(task);
     }, (err) => {
@@ -53,12 +64,12 @@ function updateTask(req, res) {
     let newFields = {};
 
     //Allows to only update the given fields
-    if(req.body.Title) newFields.Title = req.body.Title;
-    if(req.body.Date) newFields.Date = req.body.Date;
-    if(req.body.Duration) newFields.Duration = req.body.Duration;
-    if(req.body.Location) newFields.Location = req.body.Location;
-    if(req.body.Description) newFields.Description = req.body.Description;
-    if(req.body.Priority) newFields.Priority = req.body.Priority;
+    if(req.body.title) newFields.title = req.body.title;
+    if(req.body.startDate) newFields.date = req.body.startDate;
+    if(req.body.endDate) newFields.duration = req.body.endDate;
+    if(req.body.location) newFields.location = req.body.location;
+    if(req.body.description) newFields.description = req.body.description;
+    if(req.body.priority) newFields.priority = req.body.priority;
 
     Task.findByIdAndUpdate(
         {_id: req.params.id}, 
@@ -87,4 +98,4 @@ module.exports.create = createTask;
 module.exports.reads = readTasks;
 module.exports.read = readTask;
 module.exports.delete = deleteTask;
-module.exports.updatePizza = updateTask;
+module.exports.update = updateTask;
