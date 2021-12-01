@@ -226,3 +226,6 @@ Fri, 04 Dec 2020 13:27:29 GMT | ERROR  | HTTP 404: ask for:  http://localhost:30
 Fri, 04 Dec 2020 16:04:28 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/babel/parser/lib/index.js
 Fri, 18 Dec 2020 10:37:04 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/client
 Fri, 18 Dec 2020 10:52:21 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/client
+Mon, 29 Nov 2021 18:25:08 GMT | ERROR  | HTTP 404: ask for:  http://www.localhost:3000/api/v1/createTask
+Mon, 29 Nov 2021 18:25:33 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/createTask
+Mon, 29 Nov 2021 18:26:50 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/createTask
