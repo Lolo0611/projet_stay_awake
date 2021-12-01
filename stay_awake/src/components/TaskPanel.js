@@ -99,24 +99,24 @@ function TaskPanel() {
             </div>
             <div className="popupForm" id="popupForm">
                 <div className="formContainer">
-                    <h1>Création d'une tâche</h1>
+                    <h1 className="title"> Création d'une tâche</h1>
 
-                    <label for="title"><b>Titre</b></label>
+                    <label for="title">Titre</label>
                     <input type="text" placeholder="Nom de la tâche" id="title" required/>
 
-                    <label for="description"><b>Description</b></label>
+                    <label for="description">Description</label>
                     <input type="text" placeholder="Description" id="description"/>
 
-                    <label for="startDate"><b>Date de début</b></label>
+                    <label for="startDate">Date de début</label>
                     <input type="datetime-local" id="startDate" required/>
 
-                    <label for="endDate"><b>Date de fin</b></label>
+                    <label for="endDate">Date de fin</label>
                     <input type="datetime-local" id="endDate" required/>
 
-                    <label for="location"><b>Destination</b></label>
+                    <label for="location">Destination</label>
                     <input type="text" id="location"/>
 
-                    <label for="priority"><b>Priorité de la tâche</b></label>
+                    <label for="priority">Priorité de la tâche</label>
                     <input type="number" min={1} max={3} id="priority"/>
 
                     <button type="submit" className="addButton" onClick={() => createTask()}>Ajouter</button>
