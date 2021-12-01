@@ -1,7 +1,6 @@
 import '../style/App.css';
 import Navbar from '../components/Navbar';
 import Task from './Task';
-import {useState} from 'react'
 
 function App() {
   
@@ -20,10 +19,9 @@ function App() {
 
       <div className="content-right">
 
-      <div className="agenda">
       <p> content </p>
 
-        </div>  
+         
 
       
       <Task></Task>

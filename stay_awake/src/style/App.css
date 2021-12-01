@@ -5,6 +5,7 @@
 .App-header{
   background-color: #222629;
   height: 15vh;
+  
 }
 
 .header-logo{
@@ -42,16 +43,11 @@ h1{
 .content-right{
   display: flex;
   padding-left: 10px;
-  width: 100vh;
-  justify-content: space-between;
+  width: 100%;
   align-items:  center;
+  justify-content: space-between;
 }
 
-.tasks{
-  background-color: rosybrown;
-  height: 75vh;
-  border-radius: 5px;
-}
 
 
 

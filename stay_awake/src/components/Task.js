@@ -10,7 +10,7 @@ function Task(){
         <div className="slider">
         <div onClick={showTaskBar} className={taskbar? 'taskbar' : 'taskbar-hidden' }>
             <img className="fleche" src={fleche} alt="fleche"/>
-            <p> Ici gestion des tâches </p>
+            <p> Ici gestion des tâches </p> <p> Ici gestion des tâches </p>
         </div>
         </div>
     )
