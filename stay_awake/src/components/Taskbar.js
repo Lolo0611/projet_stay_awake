@@ -3,7 +3,7 @@ import '../style/Task.css'
 import fleche from '../assets/fleche.png'
 
 
-function Task(){
+function Taskbar(){
     const [taskbar, setTaskbar] = useState(false);
     const showTaskBar = () => setTaskbar(!taskbar);
     return(
@@ -16,4 +16,4 @@ function Task(){
     )
 }
 
-export default Task ;
+export default Taskbar ;

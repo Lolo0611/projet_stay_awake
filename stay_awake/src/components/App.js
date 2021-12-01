@@ -1,6 +1,6 @@
 import '../style/App.css';
 import Navbar from '../components/Navbar';
-import Task from './Task';
+import Taskbar from './Taskbar';
 
 function App() {
   
@@ -24,7 +24,7 @@ function App() {
          
 
       
-      <Task></Task>
+      <Taskbar></Taskbar>
       
       
 
