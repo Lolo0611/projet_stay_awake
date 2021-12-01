@@ -1,0 +1,57 @@
+.App{
+  height: 100vh;
+}
+
+.App-header{
+  background-color: #222629;
+  height: 15vh;
+}
+
+.header-logo{
+  padding-top: 10px ;
+  width: 100px;
+  height: 100px;
+}
+
+.NavBar{
+    background-color: #86c232;
+    height: 85vh;
+    justify-content: start;
+    align-items: top;
+    box-shadow: 1px 0px 6px #555;
+}
+
+.content{
+  background-color: #f5f3f5;
+  display: flex;
+  flex-direction: row;
+  margin: 0%;
+  padding: 0%;
+}
+
+h1{
+  margin: 0%;
+  padding-left: 30px;
+  padding-top: 25px;
+  color : white;
+  font-weight: 200;
+  font-size: 50px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.content-right{
+  display: flex;
+  padding-left: 10px;
+  width: 100vh;
+  justify-content: space-between;
+  align-items:  center;
+}
+
+.tasks{
+  background-color: rosybrown;
+  height: 75vh;
+  border-radius: 5px;
+}
+
+
+
