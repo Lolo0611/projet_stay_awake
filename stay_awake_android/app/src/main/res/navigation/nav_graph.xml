@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/FirstFragment">
+
+    <fragment
+        android:id="@+id/FirstFragment"
+        android:name="com.example.stay_awake_android.fragments.FirstFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_first">
+
+        <action
+            android:id="@+id/action_FirstFragment_to_TaskFragment"
+            app:destination="@id/TaskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TaskFragment"
+        android:name="com.example.stay_awake_android.fragments.TaskFragment"
+        android:label="@string/task_fragment_label"
+        tools:layout="@layout/fragment_task_list">
+
+        <action
+            android:id="@+id/action_TaskFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <action
+            android:id="@+id/action_TaskFragment_to_taskFormFragment"
+            app:destination="@id/TaskFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/TaskFormFragment"
+        android:name="com.example.stay_awake_android.fragments.TaskFormFragment"
+        android:label="@string/task_fragment_label"
+        tools:layout="@layout/fragment_task_form">
+        <action
+            android:id="@+id/action_TaskFormFragment_to_TaskFragment"
+            app:destination="@id/TaskFragment" />
+    </fragment>
+</navigation>

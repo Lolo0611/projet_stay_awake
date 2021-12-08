@@ -15,12 +15,12 @@ const pointSchema = new mongoose.Schema({
 });
 
 const TaskSchema = new Schema({
-  Title : String,
-  Date : Date,
-  Duration : Date,
-  Location: pointSchema,
-  Description: String,
-  Priority : Number
+  title : String,
+  startDate : Date,
+  endDate : Date,
+  location: pointSchema,
+  description: String,
+  priority : Number
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
