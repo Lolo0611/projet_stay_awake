@@ -27,7 +27,7 @@ router.get("/Task/:id", (req, res) => {
 //UPDATE
 router.put("/updateTask/:id", (req, res) => {
     
-    controller.updatePizza(req, res);
+    controller.update(req, res);
 
 });
 
