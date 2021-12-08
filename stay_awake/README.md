@@ -1,3 +1,11 @@
+
+## Couleurs utilisés : 
+Vert : #86c232
+Gris foncé : #222629
+Gris clair : #6b6e70cb
+Blanc : #f5f3f5
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

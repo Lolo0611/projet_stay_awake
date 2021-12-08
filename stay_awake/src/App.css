@@ -4,6 +4,8 @@
   min-width: 100%;
   margin: 0;
 }*/
+@import '~react-agenda/build/styles.css';
+@import '~react-datetime/css/react-datetime.css';
 
 .App{
   height: 100vh;
@@ -12,7 +14,6 @@
 .App-header{
   background-color: #222629;
   height: 15vh;
-  
 }
 
 .header-logo{
@@ -23,7 +24,6 @@
 
 .NavBar{
     background-color: #86c232;
-    height: 85vh;
     justify-content: start;
     align-items: top;
     box-shadow: 1px 0px 6px #555;
@@ -35,6 +35,7 @@
   flex-direction: row;
   margin: 0%;
   padding: 0%;
+  height: 85vh;
 }
 
 h1{
@@ -53,6 +54,12 @@ h1{
   width: 100%;
   justify-content: space-between;
   align-items:  center;
+}
+
+.agenda{
+  padding-top: 40px;
+  padding-left: 10px;
+  
 }
 
 
