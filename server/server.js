@@ -24,8 +24,13 @@ const {loggers, transports, format} = require("winston");
 //Accessing MongoDB
 const mongoose = require('mongoose');
 
+//CORS policy
+const cors = require('cors')
+
 //Create an application 
 const app = express();
+
+
 
 //used to fetch the data from forms on HTTP POST, and PUT
 app.use(bodyParser.urlencoded({
@@ -38,6 +43,8 @@ app.use(bodyParser.json());
   
 //Use the morgan logging 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+
+app.use(cors)
 
 //Define the loggers for Winston
 loggers.add('infoLogger', {

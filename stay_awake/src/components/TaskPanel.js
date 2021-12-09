@@ -1,11 +1,23 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import Task from './Task';
 import "../style/TaskPanel.css";
+
 
 function TaskPanel() {
     
 	const [tasks, updateTasks] = useState([]);
+
+    function update() {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+          };
+          
+          fetch("http://localhost:3000/Tasks", requestOptions)
+            .then(response => response.text())
+            .then(result => updateTasks(result))
+            .catch(error => console.log('error', error));
+    }
 
 	function expandTaskPanel() {
         update()
@@ -28,7 +40,6 @@ function TaskPanel() {
         document.getElementById("location").value = null;
         document.getElementById("description").value = null;
         document.getElementById("priority").value = null;
-
       }
       
       function closeForm() {
@@ -50,16 +61,6 @@ function TaskPanel() {
         if (!!newTask.title && !!newTask.startDate) {
 
             closeForm();
-
-            axios ({
-                method: 'post',
-                url: '/api/v1/createTask',
-                data: newTask
-                })
-                .then(() => {
-                    updateTasks([...tasks, newTask])
-                })
-
             update()
 
         }
@@ -69,14 +70,6 @@ function TaskPanel() {
         }
     }
 
-    function update() {
-        axios
-            .get("/api/v1/Tasks")
-            .then(response => {
-                updateTasks(response.data);
-            })
-            .catch(err => console.log("Erreur"));
-    }
 
 	return(
         <>

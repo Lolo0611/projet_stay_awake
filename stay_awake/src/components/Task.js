@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import "../style/Task.css";
 
 function Task({task}) {
@@ -11,17 +10,22 @@ function Task({task}) {
 	}
 
     function updateTask() {
-
-        // Need to get input from user
-
-        // axios ({
-        //     method: 'put',
-        //     url: '/api/v1/updateTask/' + String(task.id),
-        //     data: dataToUpdate
-        //     })
-        //     .then(() => {
-        //         alert("La tâche à bien été mise à jour.")
-        //     })
+            var urlencoded = new URLSearchParams();
+    
+            urlencoded.append("Titre" , "Seconde tâche");
+            urlencoded.append("description", "Une desription");
+            urlencoded.append("priority", "1");
+    
+            var requestOptions = {
+                method: 'POST',
+                body: urlencoded,
+                redirect: 'follow'
+            };
+      
+            fetch("{{host}}/{{name}}/{{version}}/Tasks", requestOptions)
+                .then(response => response.text())
+                .then(result => updateTaskDetailPane(result))
+                .catch(error => console.log('error', error));
     }
 
     function direction() {

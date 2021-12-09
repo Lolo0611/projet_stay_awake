@@ -229,3 +229,5 @@ Fri, 18 Dec 2020 10:52:21 GMT | ERROR  | HTTP 404: ask for:  http://localhost:30
 Mon, 29 Nov 2021 18:25:08 GMT | ERROR  | HTTP 404: ask for:  http://www.localhost:3000/api/v1/createTask
 Mon, 29 Nov 2021 18:25:33 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/createTask
 Mon, 29 Nov 2021 18:26:50 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/createTask
+Wed, 08 Dec 2021 21:19:24 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/createTask
+Wed, 08 Dec 2021 21:23:04 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/createTask
