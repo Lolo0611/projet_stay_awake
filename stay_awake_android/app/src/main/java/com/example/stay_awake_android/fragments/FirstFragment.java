@@ -24,7 +24,6 @@ public class FirstFragment extends Fragment {
 
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_TaskFragment);
+                        .navigate(R.id.action_HomeFragment_to_TaskFragment);
             }
         });
     }

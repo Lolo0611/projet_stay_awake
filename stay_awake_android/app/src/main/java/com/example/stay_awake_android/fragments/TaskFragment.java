@@ -117,11 +117,11 @@ public class TaskFragment extends Fragment {
                                 Task task = new Task();
 
                                 task.setId(obj.getString("_id"));
-                                task.setTitle(obj.getString("Title"));
-                                task.setDescription(obj.getString("Description"));
+                                task.setTitle(obj.getString("title"));
+                                task.setDescription(obj.getString("description"));
                                 //task.setDate(LocalDateTime.parse(obj.getString("Date")));
                                 //task.setDuration(LocalDateTime.parse(obj.getString("Duration")));
-                                task.setPriority(Integer.parseInt(obj.getString("Priority")));
+                                task.setPriority(Integer.parseInt(obj.getString("priority")));
 
                                 taskList.add(task);
 
@@ -152,16 +152,9 @@ public class TaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(TaskFragment.this)
-                        .navigate(R.id.action_TaskFragment_to_taskFormFragment);
+                        .navigate(R.id.action_TaskFragment_to_TaskFormFragment);
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
     }
 
     private void hidePDialog() {

@@ -5,7 +5,7 @@ function createTask(req, res) {
     let endDate = req.body.endDate;
 
     // If no endDate, adds 1 hour
-    if (!req.body.endDate) {
+    if (!req.body.endDate && startDate) {
         endDate = startDate
         endDate.setHours(startDate.getHours() + 1);
     }
@@ -19,7 +19,6 @@ function createTask(req, res) {
         priority : req.body.priority
     });
   
-    console.log(newTask)
     newTask.save()
     .then((savedTask) => {
 
