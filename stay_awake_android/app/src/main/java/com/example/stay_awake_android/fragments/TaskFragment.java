@@ -2,7 +2,6 @@ package com.example.stay_awake_android.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,9 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,20 +22,14 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.stay_awake_android.AppController;
 import com.example.stay_awake_android.R;
-import com.example.stay_awake_android.TaskRecyclerViewAdapter;
-import com.example.stay_awake_android.databinding.FragmentSecondBinding;
-import com.example.stay_awake_android.databinding.FragmentTaskBinding;
+import com.example.stay_awake_android.adapters.TaskRecyclerViewAdapter;
 import com.example.stay_awake_android.databinding.FragmentTaskListBinding;
 import com.example.stay_awake_android.models.Task;
-import com.example.stay_awake_android.placeholder.PlaceholderContent;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +46,6 @@ public class TaskFragment extends Fragment {
     private FragmentTaskListBinding binding;
 
     private List<Task> taskList;
-    private ProgressDialog pDialog;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -87,18 +76,33 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTaskListBinding.inflate(inflater, container, false);
 
-        resfreshData();
+        refreshData();
 
         return binding.getRoot();
     }
 
-    public void resfreshData() {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().findViewById(R.id.button_taskAdd).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.button_taskAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(TaskFragment.this)
+                        .navigate(R.id.action_TaskFragment_to_TaskFormFragment);
+            }
+        });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().findViewById(R.id.button_taskAdd).setVisibility(View.INVISIBLE);
+    }
+
+    public void refreshData() {
         taskList = new ArrayList<Task>();
         binding.taskList.setAdapter(new TaskRecyclerViewAdapter(taskList, this));
-
-        pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Chargement...");
-        pDialog.show();
 
         JsonArrayRequest tasksReq = new JsonArrayRequest(Request.Method.GET, AppController.url + route, null,
                 new Response.Listener<JSONArray>() {
@@ -107,7 +111,6 @@ public class TaskFragment extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d(AppController.TAG, response.toString());
-                        hidePDialog();
 
                         // Parsing json
                         for (int i = 0; i < response.length(); i++) {
@@ -138,29 +141,9 @@ public class TaskFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(AppController.TAG, "Error: " + error.getMessage());
-                hidePDialog();
             }
         });
 
         AppController.getInstance().addToRequestQueue(tasksReq);
-    }
-
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        binding.floatingAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(TaskFragment.this)
-                        .navigate(R.id.action_TaskFragment_to_TaskFormFragment);
-            }
-        });
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
     }
 }

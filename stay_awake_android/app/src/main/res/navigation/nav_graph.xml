@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_TaskFormFragment_to_TaskFragment"
             app:destination="@id/TaskFragment" />
+        <action
+            android:id="@+id/action_TaskFormFragment_to_HomeFragment"
+            app:destination="@id/HomeFragment" />
     </fragment>
 
 </navigation>

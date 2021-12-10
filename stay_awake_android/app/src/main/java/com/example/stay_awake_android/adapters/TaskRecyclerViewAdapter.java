@@ -1,50 +1,30 @@
-package com.example.stay_awake_android;
+package com.example.stay_awake_android.adapters;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Address;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.stay_awake_android.databinding.FragmentTaskFormBinding;
-import com.example.stay_awake_android.fragments.TaskFormFragment;
-import com.example.stay_awake_android.fragments.TaskFormFragmentArgs;
+import com.example.stay_awake_android.AppController;
+import com.example.stay_awake_android.R;
 import com.example.stay_awake_android.fragments.TaskFragment;
-import com.example.stay_awake_android.fragments.TaskFragmentDirections;
 import com.example.stay_awake_android.models.Task;
-import com.example.stay_awake_android.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.stay_awake_android.databinding.FragmentTaskBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
@@ -128,7 +108,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                 StringRequest deleteTaskReq = new StringRequest(Request.Method.DELETE, AppController.url + route + item.getId(), new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        mFragment.resfreshData();
+                        Snackbar.make(mFragment.getView(), "La tâche à bien été supprimée.", Snackbar.LENGTH_LONG)
+                                .setAction("Suppression", null).show();
+                        mFragment.refreshData();
                     }
                 }, new Response.ErrorListener() {
                     @Override

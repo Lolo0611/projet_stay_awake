@@ -1,0 +1,4 @@
+Thu, 09 Dec 2021 19:29:05 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TaskByDay/2021-12-09
+Thu, 09 Dec 2021 19:29:13 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/taskByDay/2021-12-09
+Thu, 09 Dec 2021 19:30:09 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TasksByDay/2021/12/09
+Thu, 09 Dec 2021 19:30:14 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TasksByDay/2021/12/09

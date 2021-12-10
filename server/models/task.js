@@ -16,11 +16,14 @@ const pointSchema = new mongoose.Schema({
 
 const TaskSchema = new Schema({
   title : String,
-  startDate : Date,
-  endDate : Date,
+  day : String,
+  hour : String,
+  duration : Number,
   location: pointSchema,
   description: String,
-  priority : Number
+  priority : Number,
+  permanent : Boolean,
+  checked : Boolean
 });
 
 module.exports = mongoose.model('Task', TaskSchema);
