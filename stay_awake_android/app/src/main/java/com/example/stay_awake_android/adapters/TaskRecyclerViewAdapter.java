@@ -1,19 +1,12 @@
-package com.example.stay_awake_android;
+package com.example.stay_awake_android.adapters;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Address;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +14,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.stay_awake_android.databinding.FragmentTaskFormBinding;
-import com.example.stay_awake_android.fragments.TaskFormFragment;
+import com.example.stay_awake_android.AppController;
+import com.example.stay_awake_android.R;
 import com.example.stay_awake_android.fragments.TaskFragment;
 import com.example.stay_awake_android.models.Task;
-import com.example.stay_awake_android.placeholder.PlaceholderContent.PlaceholderItem;
 import com.example.stay_awake_android.databinding.FragmentTaskBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONObject;
-
-import java.io.Serializable;
 import java.util.List;
 
 public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerViewAdapter.ViewHolder> {
@@ -61,24 +48,19 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.valueOf(position));
         holder.mContentView.setText(mValues.get(position).getTitle());
+
+        holder.mContentView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClick(holder.mItem);
+            }
+        });
+
         holder.mButtonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                StringRequest deleteTaskReq = new StringRequest(Request.Method.DELETE, AppController.url + route + holder.mItem.getId(), new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        onDeleteClick();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        VolleyLog.d(AppController.TAG, "Error: " + error.getMessage());
-                    }
-                });
-
-                AppController.getInstance().addToRequestQueue(deleteTaskReq);
+                onDeleteClick(holder.mItem);
             }
         });
     }
@@ -89,14 +71,12 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mIdView;
         public final TextView mContentView;
         public final ImageButton mButtonDelete;
         public Task mItem;
 
         public ViewHolder(FragmentTaskBinding binding) {
             super(binding.getRoot());
-            mIdView = binding.itemNumber;
             mContentView = binding.content;
             mButtonDelete = binding.buttonDeleteTask;
         }
@@ -107,7 +87,16 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         }
     }
 
-    private void onDeleteClick() {
+    private void onItemClick(Task item) {
+        Bundle bundle = new Bundle();
+        bundle.putString("taskId", item.getId());
+        bundle.putString("taskTitle", item.getTitle());
+        bundle.putString("taskDescription", item.getDescription());
+        bundle.putInt("taskPriority", item.getPriority());
+        Navigation.findNavController(mFragment.getView()).navigate(R.id.action_TaskFragment_to_TaskFormFragment, bundle);
+    }
+
+    private void onDeleteClick(Task item) {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle("Suppression d'un tâche");
@@ -116,7 +105,21 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mFragment.resfreshData();
+                StringRequest deleteTaskReq = new StringRequest(Request.Method.DELETE, AppController.url + route + item.getId(), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Snackbar.make(mFragment.getView(), "La tâche à bien été supprimée.", Snackbar.LENGTH_LONG)
+                                .setAction("Suppression", null).show();
+                        mFragment.refreshData();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d(AppController.TAG, "Error: " + error.getMessage());
+                    }
+                });
+
+                AppController.getInstance().addToRequestQueue(deleteTaskReq);
                 dialog.dismiss();
             }
         });

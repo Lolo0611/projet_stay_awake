@@ -18,6 +18,12 @@ router.get("/Tasks", (req, res) => {
 
 });
 
+router.get("/TasksByDay/:day", (req, res) => {
+
+    controller.readsByDay(req, res);
+
+})
+
 router.get("/Task/:id", (req, res) => {
     
     controller.read(req, res);
