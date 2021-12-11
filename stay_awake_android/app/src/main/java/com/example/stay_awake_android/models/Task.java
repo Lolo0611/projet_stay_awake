@@ -1,25 +1,29 @@
 package com.example.stay_awake_android.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Task {
     private String id;
     private String title;
-    private LocalDateTime date;
-    private LocalDateTime duration;
+    private LocalDate day;
+    private String hour;
+    private int duration;
     private String description;
     private int priority;
+    private boolean checked;
 
     public Task() {
     }
 
-    public Task(String id, String title, LocalDateTime date, LocalDateTime duration, String description, int priority) {
+    public Task(String id, String title, LocalDate day, String hour, int duration, String description, int priority, boolean checked) {
         this.id = id;
         this.title = title;
-        this.date = date;
+        this.day = day;
+        this.hour = hour;
         this.duration = duration;
         this.description = description;
         this.priority = priority;
+        this.checked = checked;
     }
 
     public String getId() {
@@ -38,19 +42,27 @@ public class Task {
         this.title = title;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDate getDay() {
+        return day;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDay(LocalDate day) {
+        this.day = day;
     }
 
-    public LocalDateTime getDuration() {
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(LocalDateTime duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -68,5 +80,13 @@ public class Task {
 
     public void setPriority(int priority) {
         this.priority = priority;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

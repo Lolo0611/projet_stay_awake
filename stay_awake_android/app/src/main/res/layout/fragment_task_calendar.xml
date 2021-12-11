@@ -14,34 +14,38 @@
     android:layout_marginRight="8dp">
 
     <LinearLayout
-        android:id="@+id/linearLayout_task"
+        android:id="@+id/linearLayout_taskCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:clickable="true"
         android:padding="8dp">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_taskStartTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Heure de début" />
+
+            <TextView
+                android:id="@+id/textView_taskEndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Heure de fin" />
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/content"
-            android:layout_width="0dp"
+            android:id="@+id/textView_taskTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/text_margin"
-            android:layout_weight="1"
+            android:text="Titre de la tâche"
             android:textAppearance="?attr/textAppearanceListItem" />
-
-        <ImageButton
-            android:id="@+id/buttonPositionTask"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:background="@color/white"
-            app:srcCompat="@android:drawable/ic_menu_recent_history" />
-
-        <ImageButton
-            android:id="@+id/buttonDeleteTask"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            app:srcCompat="@android:drawable/ic_menu_delete" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

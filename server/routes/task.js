@@ -18,6 +18,12 @@ router.get("/Tasks", (req, res) => {
 
 });
 
+router.get("/TasksByDay/:day", (req, res) => {
+
+    controller.readsByDay(req, res);
+
+})
+
 router.get("/Task/:id", (req, res) => {
     
     controller.read(req, res);
@@ -28,6 +34,12 @@ router.get("/Task/:id", (req, res) => {
 router.put("/updateTask/:id", (req, res) => {
     
     controller.update(req, res);
+
+});
+
+router.put("/checkedTask/:id", (req, res) => {
+    
+    controller.checked(req, res);
 
 });
 

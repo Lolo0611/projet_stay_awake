@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Stay Awake</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -13,8 +13,19 @@
 
     <!-- Strings related to form -->
     <string name="prompt_title">Titre *</string>
-    <string name="prompt_description">Description *</string>
-    <string name="prompt_duration">Duration *</string>
+    <string name="prompt_description">Description</string>
+    <string name="prompt_duration">Durée *</string>
     <string name="validate">Valider</string>
+
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="cancel">Annuler</string>
+    <string name="remove">Retirer</string>
+    <string name="finish">Terminer</string>
+    <string name="unfinish">Non terminée</string>
+    <string name="priority">Priorité *</string>
+    <string name="start_hour">Heure de début *</string>
 
 </resources>
