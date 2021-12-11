@@ -22,7 +22,6 @@ const TaskSchema = new Schema({
   location: pointSchema,
   description: String,
   priority : Number,
-  permanent : Boolean,
   checked : Boolean
 });
 

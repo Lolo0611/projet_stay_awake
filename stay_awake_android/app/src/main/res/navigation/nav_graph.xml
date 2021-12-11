@@ -25,27 +25,6 @@
         <action
             android:id="@+id/action_TaskFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
-        <action
-            android:id="@+id/action_TaskFragment_to_TaskFormFragment"
-            app:destination="@id/TaskFormFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/TaskFormFragment"
-        android:name="com.example.stay_awake_android.fragments.TaskFormFragment"
-        android:label="@string/task_fragment_label"
-        tools:layout="@layout/fragment_task_form">
-
-        <argument
-            android:name="taskId"
-            app:argType="string"
-            android:defaultValue="0"/>
-        <action
-            android:id="@+id/action_TaskFormFragment_to_TaskFragment"
-            app:destination="@id/TaskFragment" />
-        <action
-            android:id="@+id/action_TaskFormFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
     </fragment>
 
 </navigation>

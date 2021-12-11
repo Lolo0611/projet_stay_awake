@@ -21,93 +21,83 @@
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/textView_title"/>
+        app:layout_constraintBottom_toTopOf="@+id/textView_hour"/>
 
     <TextView
-        android:id="@+id/textView_title"
+        android:id="@+id/textView_hour"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:text="@string/prompt_title"
+        android:text="@string/start_hour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_close"/>
 
     <EditText
-        android:id="@+id/editText_taskTitle"
+        android:id="@+id/editText_hour"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:hint="Révisions examens..."
+        android:hint="Entre 6h et 20h..."
         android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="number"
         android:minHeight="48dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView_hour"/>
 
     <TextView
-        android:id="@+id/textView_description"
+        android:id="@+id/textView_duration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:text="@string/prompt_description"
+        android:text="@string/prompt_duration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_taskTitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText_hour"/>
 
     <EditText
-        android:id="@+id/editText_taskDescription"
+        android:id="@+id/editText_duration"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:hint="Je dois réviser le chapitre 1..."
+        android:hint="Ne peut pas dépasser 4h..."
         android:importantForAutofill="no"
-        android:inputType="textMultiLine"
+        android:inputType="number"
         android:minHeight="48dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_description" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_duration" />
 
     <TextView
-        android:id="@+id/textView_priority"
+        android:id="@+id/textView_error"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:textAppearance="?attr/textAppearanceBody1"
-        android:text="@string/priority"
+        android:textColor="@color/red_200"
+        android:visibility="gone"
+        android:text="Une tâche est déjà positionné dans ce créneau."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_taskDescription"/>
-
-    <Spinner
-        android:id="@+id/spinner_taskPriority"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_priority" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_duration"/>
 
     <Button
-        android:id="@+id/button_ValidateTaskForm"
+        android:id="@+id/button_ValidateTaskFormPosition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -115,6 +105,6 @@
         android:text="@string/validate"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_taskPriority" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_error" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

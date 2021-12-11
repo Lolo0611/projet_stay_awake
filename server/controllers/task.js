@@ -30,7 +30,7 @@ function readTasks(req, res) {
 
     let Task = require("../models/task");
 
-    Task.find({day: undefined}, null, {sort: {priority: 1}})
+    Task.find({day: undefined, checked: false}, null, {sort: {priority: 0}})
     .populate('Location')
     .then((tasks) => {
         res.status(200).json(functions.cleanTasks(tasks));
@@ -70,19 +70,52 @@ function updateTask(req, res) {
 
     let newFields = {};
 
-    //Allows to only update the given fields
-    if(req.body.title) newFields.title = req.body.title;
-    if(req.body.day) newFields.day = req.body.day;
-    if(req.body.hour) newFields.hour = req.body.hour;
-    if(req.body.duration) newFields.duration = req.body.duration;
-    if(req.body.location) newFields.location = req.body.location;
-    if(req.body.description) newFields.description = req.body.description;
-    if(req.body.priority) newFields.priority = req.body.priority;
-    if(req.body.checked) newFields.checked = req.body.checked;
+    if(req.body.day && req.body.hour && req.body.duration) {
+        Task.find({}).then(tasks => {
+            if(functions.checkIfTaskAlreadyInPosition(tasks, req.body.day, req.body.hour, req.body.duration)) {
+                newFields.day =  req.body.day; 
+                newFields.hour = req.body.hour;
+                newFields.duration = req.body.duration;
+
+                Task.findByIdAndUpdate(
+                    {_id: req.params.id}, 
+                    newFields,
+                    {new : false})
+                .then((updatedTask) => {
+                    res.status(200).json(updatedTask);
+                }, (err) => {
+                    res.status(500).json(err);
+                });
+            } else {
+                res.status(501).json({error: true})
+            }
+        })
+    } 
+    else {
+        newFields.day = undefined;
+        if(req.body.title) newFields.title = req.body.title;
+        if(req.body.location) newFields.location = req.body.location;
+        if(req.body.description) newFields.description = req.body.description;
+        if(req.body.priority) newFields.priority = req.body.priority;
+
+        Task.findByIdAndUpdate(
+            {_id: req.params.id}, 
+            newFields,
+            {new : false})
+        .then((updatedTask) => {
+            res.status(200).json(updatedTask);
+        }, (err) => {
+            res.status(500).json(err);
+        });
+    } 
+}
+
+function checkedTask(req, res) {
+    let Task = require("../models/task");
 
     Task.findByIdAndUpdate(
         {_id: req.params.id}, 
-        newFields,
+        {checked: req.body.checked},
         {new : false})
     .then((updatedTask) => {
         res.status(200).json(updatedTask);
@@ -109,3 +142,4 @@ module.exports.readsByDay = readTasksByDay;
 module.exports.read = readTask;
 module.exports.delete = deleteTask;
 module.exports.update = updateTask;
+module.exports.checked = checkedTask;

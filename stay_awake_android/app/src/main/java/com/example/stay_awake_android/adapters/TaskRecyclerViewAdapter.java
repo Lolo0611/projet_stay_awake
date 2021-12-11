@@ -1,5 +1,7 @@
 package com.example.stay_awake_android.adapters;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -20,6 +23,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.example.stay_awake_android.AppController;
 import com.example.stay_awake_android.R;
+import com.example.stay_awake_android.fragments.TaskFormFragment;
+import com.example.stay_awake_android.fragments.TaskFormPositionFragment;
 import com.example.stay_awake_android.fragments.TaskFragment;
 import com.example.stay_awake_android.models.Task;
 import com.example.stay_awake_android.databinding.FragmentTaskBinding;
@@ -48,9 +53,12 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).getTitle());
 
-        holder.mContentView.setOnClickListener(new View.OnClickListener() {
+        String content = mValues.get(position).getTitle();
+        if(content.length() > 25) content = content.substring(0, 26);
+        holder.mContentView.setText(content);
+
+        holder.mLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClick(holder.mItem);
@@ -63,6 +71,13 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                 onDeleteClick(holder.mItem);
             }
         });
+
+        holder.mButtonPosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onPositionClick(holder.mItem);
+            }
+        });
     }
 
     @Override
@@ -73,12 +88,16 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mContentView;
         public final ImageButton mButtonDelete;
+        public final ImageButton mButtonPosition;
+        public final LinearLayout mLinearLayout;
         public Task mItem;
 
         public ViewHolder(FragmentTaskBinding binding) {
             super(binding.getRoot());
             mContentView = binding.content;
             mButtonDelete = binding.buttonDeleteTask;
+            mButtonPosition = binding.buttonPositionTask;
+            mLinearLayout = binding.linearLayoutTask;
         }
 
         @Override
@@ -88,12 +107,9 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
     }
 
     private void onItemClick(Task item) {
-        Bundle bundle = new Bundle();
-        bundle.putString("taskId", item.getId());
-        bundle.putString("taskTitle", item.getTitle());
-        bundle.putString("taskDescription", item.getDescription());
-        bundle.putInt("taskPriority", item.getPriority());
-        Navigation.findNavController(mFragment.getView()).navigate(R.id.action_TaskFragment_to_TaskFormFragment, bundle);
+        FragmentManager fragmentManager = mFragment.getActivity().getSupportFragmentManager();
+        DialogFragment newFragment = TaskFormFragment.newInstance(mFragment, item.getId(), item.getTitle(), item.getDescription(), item.getPriority());
+        newFragment.show(fragmentManager, "dialog");
     }
 
     private void onDeleteClick(Task item) {
@@ -133,5 +149,11 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
         });
 
         alert.show();
+    }
+
+    private void onPositionClick(Task item) {
+        FragmentManager fragmentManager = mFragment.getActivity().getSupportFragmentManager();
+        DialogFragment newFragment = TaskFormPositionFragment.newInstance(mFragment, item.getId());
+        newFragment.show(fragmentManager, "dialog");
     }
 }
