@@ -10,13 +10,12 @@ public class Task {
     private int duration;
     private String description;
     private int priority;
-    private boolean permanent;
     private boolean checked;
 
     public Task() {
     }
 
-    public Task(String id, String title, LocalDate day, String hour, int duration, String description, int priority, boolean permanent, boolean checked) {
+    public Task(String id, String title, LocalDate day, String hour, int duration, String description, int priority, boolean checked) {
         this.id = id;
         this.title = title;
         this.day = day;
@@ -24,7 +23,6 @@ public class Task {
         this.duration = duration;
         this.description = description;
         this.priority = priority;
-        this.permanent = permanent;
         this.checked = checked;
     }
 
@@ -82,14 +80,6 @@ public class Task {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    public boolean isPermanent() {
-        return permanent;
-    }
-
-    public void setPermanent(boolean permanent) {
-        this.permanent = permanent;
     }
 
     public boolean isChecked() {

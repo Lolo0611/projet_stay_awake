@@ -1,13 +1,18 @@
 package com.example.stay_awake_android.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -88,8 +93,11 @@ public class TaskFragment extends Fragment {
         getActivity().findViewById(R.id.button_taskAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(TaskFragment.this)
-                        .navigate(R.id.action_TaskFragment_to_TaskFormFragment);
+                //NavHostFragment.findNavController(TaskFragment.this)
+                        //.navigate(R.id.action_TaskFragment_to_TaskFormFragment);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                DialogFragment newFragment = TaskFormFragment.newInstance(TaskFragment.this);
+                newFragment.show(fragmentManager, "dialog");
             }
         });
     }

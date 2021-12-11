@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +29,9 @@ import com.example.stay_awake_android.R;
 import com.example.stay_awake_android.databinding.FragmentHomeBinding;
 import com.example.stay_awake_android.databinding.FragmentTaskBinding;
 import com.example.stay_awake_android.databinding.FragmentTaskCalendarBinding;
+import com.example.stay_awake_android.fragments.DetailFragment;
 import com.example.stay_awake_android.fragments.HomeFragment;
+import com.example.stay_awake_android.fragments.TaskFormFragment;
 import com.example.stay_awake_android.fragments.TaskFragment;
 import com.example.stay_awake_android.models.Task;
 
@@ -81,7 +87,7 @@ public class TaskCalendarRecyclerViewAdapter extends RecyclerView.Adapter<TaskCa
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onItemClick(holder.mItem);
             }
         });
     }
@@ -113,6 +119,8 @@ public class TaskCalendarRecyclerViewAdapter extends RecyclerView.Adapter<TaskCa
     }
 
     private void onItemClick(Task item) {
-
+        FragmentManager fragmentManager = mFragment.getActivity().getSupportFragmentManager();
+        DialogFragment newFragment = DetailFragment.newInstance(mFragment, item.getId(), item.getTitle(), item.getDescription(), item.getHour(), item.getDuration(), item.isChecked());
+        newFragment.show(fragmentManager, "dialog");
     }
 }

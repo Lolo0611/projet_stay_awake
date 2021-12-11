@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -77,12 +79,6 @@ public class HomeFragment extends Fragment {
                 refreshData();
             }
         });
-
-        binding.floatingEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
     }
 
     @Override
@@ -126,7 +122,6 @@ public class HomeFragment extends Fragment {
                                 task.setHour(obj.getString("hour"));
                                 task.setDuration(Integer.parseInt(obj.getString("duration")));
                                 task.setPriority(Integer.parseInt(obj.getString("priority")));
-                                task.setPermanent(Boolean.parseBoolean(obj.getString("permanent")));
                                 task.setChecked(Boolean.parseBoolean(obj.getString("checked")));
 
                                 taskList.add(task);
@@ -136,7 +131,7 @@ public class HomeFragment extends Fragment {
                             }
 
                         }
-                        if(Objects.nonNull(binding.taskCalendar)) {
+                        if(Objects.nonNull(binding)) {
                             binding.taskCalendar.getAdapter().notifyDataSetChanged();
                         }
                     }

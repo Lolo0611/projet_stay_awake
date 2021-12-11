@@ -67,14 +67,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.pageHome:
                         if(navController.getCurrentDestination().getId() == R.id.TaskFragment)
                             navController.navigate(R.id.action_TaskFragment_to_HomeFragment);
-                        if(navController.getCurrentDestination().getId() == R.id.TaskFormFragment)
-                            navController.navigate(R.id.action_TaskFormFragment_to_HomeFragment);
                         break;
                     case R.id.pageTasks:
                         if(navController.getCurrentDestination().getId() == R.id.HomeFragment)
                             navController.navigate(R.id.action_HomeFragment_to_TaskFragment);
-                        if(navController.getCurrentDestination().getId() == R.id.TaskFormFragment)
-                            navController.navigate(R.id.action_TaskFormFragment_to_TaskFragment);
                         break;
                 }
                 return true;

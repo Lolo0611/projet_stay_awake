@@ -63,19 +63,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout_currentDate"
         tools:listitem="@layout/fragment_task_calendar" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingEditButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
-        android:backgroundTint="@color/purple_200"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_menu_edit"
-        app:backgroundTint="@color/purple_200"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

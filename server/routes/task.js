@@ -37,6 +37,12 @@ router.put("/updateTask/:id", (req, res) => {
 
 });
 
+router.put("/checkedTask/:id", (req, res) => {
+    
+    controller.checked(req, res);
+
+});
+
 //DELETE
 router.delete("/deleteTask/:id", (req, res) => {
     
