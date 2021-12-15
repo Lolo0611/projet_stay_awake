@@ -16,7 +16,7 @@ function Task({task}) {
 
         // axios ({
         //     method: 'put',
-        //     url: '/api/v1/updateTask/' + String(task.id),
+        //     url: 'http://localhost:3000/api/v1/updateTask/' + String(task.id),
         //     data: dataToUpdate
         //     })
         //     .then(() => {

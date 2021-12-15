@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { stringify } from 'querystring';
 import Task from './Task';
 import "../style/TaskPanel.css";
 
@@ -23,12 +24,12 @@ function TaskPanel() {
         document.getElementById("popupForm").style.display = "block";
 
         document.getElementById("title").value = null;
-        document.getElementById("startDate").value = null;
-        document.getElementById("endDate").value = null;
+        document.getElementById("date").value = null;
+        document.getElementById("duration").value = null;
         document.getElementById("location").value = null;
         document.getElementById("description").value = null;
         document.getElementById("priority").value = null;
-
+        document.getElementById("permanent").value = null;
       }
       
       function closeForm() {
@@ -36,28 +37,32 @@ function TaskPanel() {
       }
 
     function createTask() {
-        let newTask = {"title": document.getElementById("title").value,
-                       "startDate": new Date(document.getElementById("startDate").value),
-                       "endDate": new Date(document.getElementById("endDate").value),
-                       "location": document.getElementById("location").value,
-                       "description": document.getElementById("description").value,
-                       "priority": document.getElementById("priority").value
-                    }
+        let newTask = {title: String(document.getElementById("title").value),
+                        date: new Date(String(document.getElementById("date").value)).toLocaleDateString(),
+                        hour: new Date(String(document.getElementById("date").value)).toLocaleTimeString(),
+                        duration: Number(document.getElementById("duration").value),
+                        location: String(document.getElementById("location").value),
+                        description: String(document.getElementById("description").value),
+                        priority: Number(document.getElementById("priority").value),
+                        permanent: Boolean(document.getElementById("permanent").value)
+                        }
 
         console.log("New task:");
         console.log(newTask);
 
-        if (!!newTask.title && !!newTask.startDate) {
+        if (!!newTask.title && !!newTask.date) {
 
             closeForm();
 
-            axios ({
-                method: 'post',
-                url: '/api/v1/createTask',
-                data: newTask
-                })
+            const config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+
+            // Still not working somehow
+            // Try formData format even though i'm sus 'bout it
+            axios
+                .post("http://localhost:3000/api/v1/createTask", newTask, config)
                 .then(() => {
-                    updateTasks([...tasks, newTask])
+                    updateTasks([...tasks, newTask]);
+                    alert("Tâche créée avec succès");
                 })
 
             update()
@@ -70,9 +75,10 @@ function TaskPanel() {
     }
 
     function update() {
-        axios
-            .get("/api/v1/Tasks")
+        axios.get("http://localhost:3000/api/v1/Tasks")
             .then(response => {
+                console.log("tasks")
+                console.log(response.data)
                 updateTasks(response.data);
             })
             .catch(err => console.log("Erreur"));
@@ -107,17 +113,20 @@ function TaskPanel() {
                     <label for="description">Description</label>
                     <input type="text" placeholder="Description" id="description"/>
 
-                    <label for="startDate">Date de début</label>
-                    <input type="datetime-local" id="startDate" required/>
+                    <label for="date">Date</label>
+                    <input type="datetime-local" id="date" required/>
 
-                    <label for="endDate">Date de fin</label>
-                    <input type="datetime-local" id="endDate" required/>
+                    <label for="duration">Durée (min)</label>
+                    <input type="number" min={0} step="15" id="duration" required/>
 
                     <label for="location">Destination</label>
                     <input type="text" id="location"/>
 
                     <label for="priority">Priorité de la tâche</label>
                     <input type="number" min={1} max={3} id="priority"/>
+
+                    <label for="permanent">Tâche récurrente</label>
+                    <input type="checkbox" id="permanent"/>
 
                     <button type="submit" className="addButton" onClick={() => createTask()}>Ajouter</button>
                     <button type="button" className="cancelButton" onClick={() => closeForm()}>Annuler</button>
