@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Task from './Task';
 import "../style/TaskPanel.css";
+import { func } from 'prop-types';
 
 function TaskPanel(props) {
     
@@ -21,17 +22,16 @@ function TaskPanel(props) {
 
     function update() {
         var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-          };
+            method: 'GET'          };
           
-          fetch("http://localhost:3000/Tasks", requestOptions)
+          fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
             .then(response => response.text())
-            .then(result => updateTasks(result))
+            .then(result =>  updateTasks(result))
             .catch(error => console.log('error', error));
     }
 
 	function expandTaskPanel() {
+
         update()
 		document.getElementById("container").style.width = "350px";
         document.getElementById("expandButton").style.display = "none";
@@ -69,6 +69,20 @@ function TaskPanel(props) {
 
         console.log("New task:");
         console.log(newTask);
+                
+        var urlencoded = new URLSearchParams();
+            urlencoded.append(newTask.title , "Seconde tâche");
+            urlencoded.append("description", "Une desription");
+            urlencoded.append("priority", "1");
+            var requestOptions = {
+                method: 'POST',
+                body: urlencoded,
+                redirect: 'follow'
+            };
+            fetch("http://localhost:3000/api/v1/createTask", requestOptions)
+                .then(response => response.text())
+                .then(result => updateTasks(result))
+                .catch(error => console.log('error', error));
 
         if (!!newTask.title && !!newTask.startDate) {
             closeForm();

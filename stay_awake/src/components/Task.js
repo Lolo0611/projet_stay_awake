@@ -23,6 +23,7 @@ function Task(props) {
 		updateTaskDetailPane(!taskDetailPane);
 	}
 
+    //à MAJ c'est pour mettre à jour une tâche
     function updateTask() {
             var urlencoded = new URLSearchParams();
             urlencoded.append("Titre" , "Seconde tâche");
@@ -33,7 +34,7 @@ function Task(props) {
                 body: urlencoded,
                 redirect: 'follow'
             };
-            fetch("{{host}}/{{name}}/{{version}}/Tasks", requestOptions)
+            fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
                 .then(response => response.text())
                 .then(result => updateTaskDetailPane(result))
                 .catch(error => console.log('error', error));
