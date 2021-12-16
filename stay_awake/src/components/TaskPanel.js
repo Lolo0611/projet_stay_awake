@@ -2,10 +2,22 @@ import React, {useState} from 'react';
 import Task from './Task';
 import "../style/TaskPanel.css";
 
-
-function TaskPanel() {
+function TaskPanel(props) {
     
 	const [tasks, updateTasks] = useState([]);
+    tasks.length += 1
+
+    const drop = e => {
+        e.preventDefault();
+        const card_id= e.dataTransfer.getData('card_id');
+        const card = document.getElementById(card_id);
+        card.style.display="block";
+        e.target.appendChild(card);
+    }
+    const dragOver = e => {
+        e.preventDefault();
+
+    }
 
     function update() {
         var requestOptions = {
@@ -59,10 +71,8 @@ function TaskPanel() {
         console.log(newTask);
 
         if (!!newTask.title && !!newTask.startDate) {
-
             closeForm();
             update()
-
         }
 
         else {
@@ -70,23 +80,18 @@ function TaskPanel() {
         }
     }
 
-
 	return(
         <>
-            <div className="taskPanel">
+            <div className="taskPanel" id={props.id} onDrop={drop} onDragOver={dragOver} className={props.className}>
                 <button id="expandButton" className="expandButton" onClick={() => expandTaskPanel()}>&#60;</button>
                 <div id="container" className="container">
                     <button className="closeButton" onClick={() => collapseTaskPanel()}>&times;</button>
-                    {!!tasks.length &&
-                        tasks.forEach(task => {
-                            <Task task={task}/>
-                        })
+                    { 
+                        <Task title="RDV dentiste" duration="3" id="card-1" className="card" draggable="true"> {props.children} </Task>
                     }
-
                     {!tasks.length &&
-                        <div className="emptyDiv">Aucunes tâches à afficher</div>
+                        <div className="emptyDiv">Aucunes tâches à afficher</div>    
                     }
-
                     <button className="createTaskButton" onClick={() => openForm()}>+</button>
                 </div>
             </div>

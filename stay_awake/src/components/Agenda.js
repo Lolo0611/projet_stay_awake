@@ -11,9 +11,18 @@ var colors = {
 var now = new Date();
 
 var items = [
-
-
 ];
+
+const drop = e => {
+    e.preventDefault();
+    const card_id= e.dataTransfer.getData('card_id');
+    const card = document.getElementById(card_id);
+    card.style.display="block";
+    e.target.appendChild(card);
+}
+const dragOver = e => {
+    e.preventDefault();
+}
 
 export default class Agenda extends React.Component {
     constructor(props) {
@@ -46,8 +55,12 @@ export default class Agenda extends React.Component {
     }
     render() {
         return ( 
-            <div>
+            <div
+            onDrop={drop}
+            onDragOver={dragOver}>
             <ReactAgenda
+            id={this.state.id}
+            className={this.state.className}
             ReactAgenda minDate = { now }
             maxDate = { new Date(now.getFullYear(), now.getMonth() + 3) }
             disablePrevButton = { false }
@@ -66,6 +79,7 @@ export default class Agenda extends React.Component {
             onCellSelect = { this.handleCellSelection.bind(this) }
             onRangeSelection = { this.handleRangeSelection.bind(this) }
             /> 
+                {this.state.children}
             </div>
         );
     }

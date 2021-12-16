@@ -1,9 +1,23 @@
 import React, {useState} from 'react';
 import "../style/Task.css";
 
-function Task({task}) {
+function Task(props) {
+    const {title, duration, description, date} = props
 
     const [taskDetailPane, updateTaskDetailPane] = useState(false)
+
+    const dragStart = e => {
+        const target = e.target;
+        e.dataTransfer.setData('card_id', target.id);
+        setTimeout(() => {
+            target.style.display = "none";
+        }, 0);
+    }
+
+    const dragOver = e => {
+        e.stopPropagation();
+    }
+    
 
 	function showTaskDetail() {
 		updateTaskDetailPane(!taskDetailPane);
@@ -11,17 +25,14 @@ function Task({task}) {
 
     function updateTask() {
             var urlencoded = new URLSearchParams();
-    
             urlencoded.append("Titre" , "Seconde tâche");
             urlencoded.append("description", "Une desription");
             urlencoded.append("priority", "1");
-    
             var requestOptions = {
                 method: 'POST',
                 body: urlencoded,
                 redirect: 'follow'
             };
-      
             fetch("{{host}}/{{name}}/{{version}}/Tasks", requestOptions)
                 .then(response => response.text())
                 .then(result => updateTaskDetailPane(result))
@@ -34,14 +45,18 @@ function Task({task}) {
     }
 
 	return(
-		<div className="container" onClick={() => showTaskDetail()}>
-            <h1 className="title">{task.title}</h1>
-            <p className="date">{task.date}</p>
-            <p className="duration">{task.duration}</p>
+		<div id={props.id}
+        className={props.className} 
+        draggable={props.draggable}
+        onDragStart={dragStart}
+        onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
+            <h1 className="title">{title}</h1>
+            <p className="date">{date}</p>
+            <p className="duration">{duration}</p>
             {taskDetailPane &&
                 <>
-                    <p className="description">{task.description}</p>
-                    <p className="duration">{task.duration}</p>
+                    <p className="description">{description}</p>
+                    <p className="duration">{duration}</p>
                     <div className="map">Map placeholder</div>
                     <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
                     <button className="updateTaskButton" onClick={() => updateTask()}>Modifier</button>
