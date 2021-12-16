@@ -22,22 +22,22 @@
 }
 
 .container {
-    
     position: fixed;
     z-index: 1;
     right: 0;
     transform: translate(0, -50%);
-    overflow-x: hidden;
+    overflow: hidden;
     transition: 0.5s;
     background-color: #6b6e70cb;
     box-shadow: 1px 1px 6px #555;
     border-radius: 10px 0px 0px 10px;
     color :whitesmoke;
     height: 75vh;
+    width: 0px;
 }
 
 .container .closeButton {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 10px;
     font-size: 36px;
@@ -52,7 +52,14 @@
     color: white;
 }
 
-.container .emptyDiv {
+.container .taskContainer {
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    height: 75vh;
+}
+
+.taskContainer .emptyDiv {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,7 +78,7 @@
 }
 
 .container .createTaskButton {
-    position: absolute;
+    position: fixed;
     bottom: 15px;
     right: 15px;
     font-size: 36px;
@@ -109,7 +116,7 @@
     width: 100%;
     padding: 20px;
     padding-top:0 ;
-    background-color: #111;
+    background-color: #6B6E70;
     border-radius: 10px;
     flex-direction: column;
 }
@@ -121,7 +128,7 @@
     margin-bottom: 15px;
     margin-top: 5px;
     border: none;
-    color: #818181;
+    color: white;
     background: rgba(66, 66, 66, 0.75);
     border-radius: 5px;
 }
@@ -129,6 +136,7 @@
 .formContainer input:focus {
     background-color: #ddd;
     outline: none;
+    color: black;
 }
 
 .formContainer .addButton {

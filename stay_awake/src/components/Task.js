@@ -17,7 +17,6 @@ function Task(props) {
     const dragOver = e => {
         e.stopPropagation();
     }
-    
 
 	function showTaskDetail() {
 		updateTaskDetailPane(!taskDetailPane);
@@ -25,19 +24,19 @@ function Task(props) {
 
     //à MAJ c'est pour mettre à jour une tâche
     function updateTask() {
-            var urlencoded = new URLSearchParams();
-            urlencoded.append("Titre" , "Seconde tâche");
-            urlencoded.append("description", "Une desription");
-            urlencoded.append("priority", "1");
-            var requestOptions = {
-                method: 'POST',
-                body: urlencoded,
-                redirect: 'follow'
-            };
-            fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
-                .then(response => response.text())
-                .then(result => updateTaskDetailPane(result))
-                .catch(error => console.log('error', error));
+            // var urlencoded = new URLSearchParams();
+            // urlencoded.append("Titre" , "Seconde tâche");
+            // urlencoded.append("description", "Une desription");
+            // urlencoded.append("priority", "1");
+            // var requestOptions = {
+            //     method: 'POST',
+            //     body: urlencoded,
+            //     redirect: 'follow'
+            // };
+            // fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
+            //     .then(response => response.text())
+            //     .then(result => updateTaskDetailPane(result))
+            //     .catch(error => console.log('error', error));
     }
 
     function direction() {
@@ -46,23 +45,19 @@ function Task(props) {
     }
 
 	return(
-		<div id={props.id}
-        className={props.className} 
-        draggable={props.draggable}
-        onDragStart={dragStart}
-        onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
+		<div id={props.id} className={props.className} draggable={props.draggable} onDragStart={dragStart} onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
             <h1 className="title">{title}</h1>
-            <p className="date">{date}</p>
-            <p className="duration">{duration}</p>
+            {/* <p className="location">{location}</p> */}
+
             {taskDetailPane &&
                 <>
                     <p className="description">{description}</p>
-                    <p className="duration">{duration}</p>
                     <div className="map">Map placeholder</div>
                     <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
                     <button className="updateTaskButton" onClick={() => updateTask()}>Modifier</button>
                 </>
             }
+
 		</div>
 	);
 };
