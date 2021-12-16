@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { stringify } from 'querystring';
 import Task from './Task';
 import "../style/TaskPanel.css";
 
@@ -24,7 +23,6 @@ function TaskPanel() {
         document.getElementById("popupForm").style.display = "block";
 
         document.getElementById("title").value = null;
-        document.getElementById("date").value = null;
         document.getElementById("duration").value = null;
         document.getElementById("location").value = null;
         document.getElementById("description").value = null;
@@ -38,8 +36,6 @@ function TaskPanel() {
 
     function createTask() {
         let newTask = {title: String(document.getElementById("title").value),
-                        date: new Date(String(document.getElementById("date").value)).toLocaleDateString(),
-                        hour: new Date(String(document.getElementById("date").value)).toLocaleTimeString(),
                         duration: Number(document.getElementById("duration").value),
                         location: String(document.getElementById("location").value),
                         description: String(document.getElementById("description").value),
@@ -49,35 +45,36 @@ function TaskPanel() {
 
         console.log("New task:");
         console.log(newTask);
+        console.log(JSON.stringify(newTask));
 
-        if (!!newTask.title && !!newTask.date) {
+        if (!!newTask.title && !!newTask.duration) {
 
             closeForm();
 
-            const config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+            const config = {headers: {'Content-Type': 'application/json'}}
 
-            // Still not working somehow
-            // Try formData format even though i'm sus 'bout it
-            axios
-                .post("http://localhost:3000/api/v1/createTask", newTask, config)
+            axios.post({
+                url: "http://localhost:3000/api/v1/createTask",
+                data: JSON.stringify(newTask),
+                config: config,
+                })
                 .then(() => {
                     updateTasks([...tasks, newTask]);
                     alert("Tâche créée avec succès");
                 })
 
             update()
-
         }
 
         else {
-            alert("Merci de renseigner au minimum le titre et les dates de la tâche")
+            alert("Merci de renseigner au minimum le titre et la durée de la tâche")
         }
     }
 
-    function update() {
+    async function update() {
         axios.get("http://localhost:3000/api/v1/Tasks")
             .then(response => {
-                console.log("tasks")
+                console.log("Tasks:")
                 console.log(response.data)
                 updateTasks(response.data);
             })
@@ -90,15 +87,17 @@ function TaskPanel() {
                 <button id="expandButton" className="expandButton" onClick={() => expandTaskPanel()}>&#60;</button>
                 <div id="container" className="container">
                     <button className="closeButton" onClick={() => collapseTaskPanel()}>&times;</button>
-                    {!!tasks.length &&
-                        tasks.forEach(task => {
-                            <Task task={task}/>
-                        })
-                    }
+                    <div className="taskContainer">
+                        {!!tasks.length &&
+                            tasks.forEach(task => {
+                                <Task task={task}/>
+                            })
+                        }
 
-                    {!tasks.length &&
-                        <div className="emptyDiv">Aucunes tâches à afficher</div>
-                    }
+                        {!tasks.length &&
+                            <div className="emptyDiv">Aucunes tâches à afficher</div>
+                        }
+                    </div>
 
                     <button className="createTaskButton" onClick={() => openForm()}>+</button>
                 </div>
@@ -107,25 +106,22 @@ function TaskPanel() {
                 <div className="formContainer">
                     <h1 className="title"> Création d'une tâche</h1>
 
-                    <label for="title">Titre</label>
+                    <label htmlFor="title">Titre</label>
                     <input type="text" placeholder="Nom de la tâche" id="title" required/>
 
-                    <label for="description">Description</label>
+                    <label htmlFor="description">Description</label>
                     <input type="text" placeholder="Description" id="description"/>
 
-                    <label for="date">Date</label>
-                    <input type="datetime-local" id="date" required/>
+                    <label htmlFor="location">Destination</label>
+                    <input type="text" placeholder="Destination" id="location"/>
 
-                    <label for="duration">Durée (min)</label>
+                    <label htmlFor="duration">Durée (min)</label>
                     <input type="number" min={0} step="15" id="duration" required/>
 
-                    <label for="location">Destination</label>
-                    <input type="text" id="location"/>
-
-                    <label for="priority">Priorité de la tâche</label>
+                    <label htmlFor="priority">Priorité de la tâche</label>
                     <input type="number" min={1} max={3} id="priority"/>
 
-                    <label for="permanent">Tâche récurrente</label>
+                    <label htmlFor="permanent">Tâche récurrente</label>
                     <input type="checkbox" id="permanent"/>
 
                     <button type="submit" className="addButton" onClick={() => createTask()}>Ajouter</button>

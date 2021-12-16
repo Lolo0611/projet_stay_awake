@@ -52,6 +52,17 @@
     color: white;
 }
 
+.container .taskContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 50%;
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);
+    overflow-x: hidden;
+    width: 80%;
+}
+
 .container .emptyDiv {
     display: flex;
     flex-direction: column;

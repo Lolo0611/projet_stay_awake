@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import "../style/Task.css";
 
 function Task({task}) {
@@ -11,8 +10,7 @@ function Task({task}) {
 	}
 
     function updateTask() {
-
-        // Need to get input from user
+        console.log("Update task data")
 
         // axios ({
         //     method: 'put',
@@ -34,13 +32,12 @@ function Task({task}) {
             <h1 className="title">{task.title}</h1>
             <p className="date">{task.date}</p>
             <p className="duration">{task.duration}</p>
+            <button className="updateTaskButton" onClick={() => updateTask()}>Modifier</button>
             {taskDetailPane &&
                 <>
                     <p className="description">{task.description}</p>
-                    <p className="duration">{task.duration}</p>
                     <div className="map">Map placeholder</div>
                     <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
-                    <button className="updateTaskButton" onClick={() => updateTask()}>Modifier</button>
                 </>
             }
 		</div>

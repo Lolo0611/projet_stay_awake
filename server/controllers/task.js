@@ -31,7 +31,6 @@ function readTasks(req, res) {
     let Task = require("../models/task");
 
     Task.find({day: undefined, checked: false}, null, {sort: {priority: 0}})
-    .populate('Location')
     .then((tasks) => {
         res.status(200).json(functions.cleanTasks(tasks));
     }, (err) => {
@@ -43,7 +42,6 @@ function readTasksByDay(req, res) {
     let Task = require("../models/task");
 
     Task.find({day : req.params.day}, null, {sort: {hour: 1}})
-    .populate('location')
     .then((tasks) => {
         res.status(200).json(tasks);
     }, (err) => {
@@ -56,7 +54,6 @@ function readTask(req, res) {
     let Task = require("../models/task");
 
     Task.findById({_id : req.params.id})
-    .populate('location')
     .then((task) => {
         res.status(200).json(task);
     }, (err) => {
