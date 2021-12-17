@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ReactAgenda, ReactAgendaCtrl, guid, Modal } from 'react-agenda';
+import React from 'react';
+import {ReactAgenda} from 'react-agenda';
 
 require('moment/locale/fr.js'); // this is important for traduction purpose
 
@@ -9,9 +9,6 @@ var colors = {
     "color-3": "rgba(235, 85, 59, 1)"
 }
 var now = new Date();
-
-var items = [
-];
 
 const drop = e => {
     e.preventDefault();
@@ -25,15 +22,11 @@ const dragOver = e => {
     e.preventDefault();
 }
 
-// useEffect(() => {
-//     // Do something
-// }, [items])
-
 export default class Agenda extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: items,
+            items: props.items,
             selected: [],
             cellHeight: 30,
             showModal: true,
@@ -49,6 +42,18 @@ export default class Agenda extends React.Component {
         this.handleRangeSelection = this.handleRangeSelection.bind(this)
     }
 
+    componentDidMount() {
+        let startDateTime = new Date(String(this.handleCellSelection).replace('-', '/').replace('T', ' '))
+        this.state.items.startDateTime = startDateTime
+        this.state.items.endDateTime = startDateTime.setHours(startDateTime.getHours() + this.state.items.duration)
+
+        delete this.state.items.duration
+    }
+
+    componentDidUpdate() {
+        // Do something
+    }
+
     handleCellSelection(item) {
         console.log('handleCellSelection', item)
     }
@@ -58,6 +63,7 @@ export default class Agenda extends React.Component {
     handleRangeSelection(item) {
         console.log('handleRangeSelection', item)
     }
+
     render() {
         return ( 
             <div

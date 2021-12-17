@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {guid} from 'react-agenda';
 import "../style/Task.css";
 
 function Task(props) {
@@ -17,7 +18,16 @@ function Task(props) {
 
     const dragOver = e => {
         e.stopPropagation();
-        
+
+        let item = {
+            _id :guid(),
+            name : task.title,
+            startDateTime : "",
+            endDateTime : "",
+            duration: task.duration,
+        }
+
+        props.setItems([...items, item])
     }
 
 	function showTaskDetail() {
@@ -56,7 +66,7 @@ function Task(props) {
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:3000/api/v1/updateTask/" + task.id, requestOptions)
+            fetch("http://localhost:3000/api/v1/updateTask/:" + task.id, requestOptions)
                 .then(result => {
                     console.log(result)
                     alert("La tâche a été créée avec succès");

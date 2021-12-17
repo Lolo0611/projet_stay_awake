@@ -7,6 +7,11 @@ import Agenda from './components/Agenda';
 function App() {
     const [items, setItems] = useState([])
 
+    useEffect(() => {
+        console.log("Items:")
+        console.log(items)
+    }, [items])
+
     return ( 
         <div className = "App" >
         <div className = "App-header" >
@@ -21,11 +26,11 @@ function App() {
 
             <div className = "content-right">
             <div className = "agenda" >
-            <Agenda items={items}/>   
+            <Agenda items={items} setItems={setItems}/>   
             
             </div>
 
-        <TaskPanel items={items}/>
+        <TaskPanel items={items} setItems={setItems}/>
 
             </div>
         </div> 

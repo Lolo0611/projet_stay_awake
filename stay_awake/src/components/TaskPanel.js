@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Task from './Task';
 import "../style/TaskPanel.css";
 
@@ -103,7 +103,7 @@ function TaskPanel(props) {
                         {(tasks && tasks.length > 0) 
                         ?
                             tasks.map((task, index) => {
-                                return <Task key={index} task={task} id={index} items={props.items} className="taskCard" draggable="true"/>
+                                return <Task key={index} task={task} id={index} items={props.items} setItems={props.setItems} className="taskCard" draggable="true"/>
                             })
                         :
                             <div className="emptyDiv">Aucunes tâches à afficher</div>    
