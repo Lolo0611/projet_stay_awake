@@ -1,35 +1,3 @@
-.taskbar-hidden {
-    display: flex;
-    height: 75vh;
-    width: 3vh;
-    border-radius: 10px 0px 0px 10px;
-    z-index: 1;
-    background-color: #6b6e70cb;
-    overflow-x: hidden;
-    transition: 0.7s;
-    color: whitesmoke;
-    align-items: center;
-    box-shadow: 1px 1px 6px #555;
-}
-
-.taskbar {
-    display: flex;
-    align-items: center;
-    background-color: #6b6e70cb;
-    height: 75vh;
-    box-shadow: 1px 1px 6px #555;
-    border-radius: 10px 0px 0px 10px;
-    transition: 0.5s;
-    color: whitesmoke;
-}
-
-.fleche {
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
-    margin-left: 5px;
-}
-
 .task {
     display: flex;
     flex-direction: column;

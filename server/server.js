@@ -36,7 +36,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //Allow CORS
 app.use(cors());
-app.options('*', cors());
 
 //Use the morgan logging 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));

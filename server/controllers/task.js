@@ -31,6 +31,7 @@ function readTasks(req, res) {
     let Task = require("../models/task");
 
     Task.find({day: undefined, checked: false}, null, {sort: {priority: 0}})
+    .populate('Location')
     .then((tasks) => {
         res.status(200).json(functions.cleanTasks(tasks));
     }, (err) => {
@@ -41,9 +42,28 @@ function readTasks(req, res) {
 function readTasksByDay(req, res) {
     let Task = require("../models/task");
 
-    Task.find({day : req.params.day}, null, {sort: {hour: 1}})
+    Task.find({$or: [{day : req.params.day}, {permanent: true}]}, null, {sort: {hour: 1}})
     .then((tasks) => {
-        res.status(200).json(tasks);
+        res.status(200).json(functions.updatePermanentDay(tasks, req.params.day));
+    }, (err) => {
+        res.status(500).json(err);
+    })
+}
+
+function readTaskInHour(req, res) {
+    let Task = require("../models/task");
+
+    Task.find({day : req.params.day})
+    .then((tasks) => {
+
+        let taskInHour = null
+        tasks.forEach(task => {
+            if(functions.checkIfTaskIsNear(task)) {
+                taskInHour = task
+            }
+        })
+
+        res.status(200).json(taskInHour);
     }, (err) => {
         res.status(500).json(err);
     });
@@ -54,6 +74,7 @@ function readTask(req, res) {
     let Task = require("../models/task");
 
     Task.findById({_id : req.params.id})
+    .populate('location')
     .then((task) => {
         res.status(200).json(task);
     }, (err) => {
@@ -61,10 +82,8 @@ function readTask(req, res) {
     });
  }
 
-function updateTask(req, res) {
-
-    let Task = require("../models/task");
-
+ function updateTaskPosition(req, res) {
+    let Task = require("../models/task");    
     let newFields = {};
 
     if(req.body.day && req.body.hour && req.body.duration) {
@@ -87,24 +106,40 @@ function updateTask(req, res) {
                 res.status(501).json({error: true})
             }
         })
-    } 
-    else {
-        newFields.day = undefined;
-        if(req.body.title) newFields.title = req.body.title;
-        if(req.body.location) newFields.location = req.body.location;
-        if(req.body.description) newFields.description = req.body.description;
-        if(req.body.priority) newFields.priority = req.body.priority;
-
+    } else {
         Task.findByIdAndUpdate(
             {_id: req.params.id}, 
-            newFields,
+            {day : undefined, hour : undefined, duration : undefined},
             {new : false})
-        .then((updatedTask) => {
-            res.status(200).json(updatedTask);
-        }, (err) => {
-            res.status(500).json(err);
-        });
-    } 
+            .then((updatedTask) => {
+                res.status(200).json(updatedTask);
+            }, (err) => {
+                res.status(500).json(err);
+            });
+    }
+ }
+
+function updateTask(req, res) {
+
+    let Task = require("../models/task");
+
+    let newFields = {};
+
+    if(req.body.title) newFields.title = req.body.title;
+    if(req.body.location) newFields.location = req.body.location;
+    if(req.body.description) newFields.description = req.body.description;
+    if(req.body.priority) newFields.priority = req.body.priority;
+    if(req.body.permanent !== undefined) newFields.permanent = req.body.permanent;
+
+    Task.findByIdAndUpdate(
+        {_id: req.params.id}, 
+        newFields,
+        {new : false})
+    .then((updatedTask) => {
+        res.status(200).json(updatedTask);
+    }, (err) => {
+        res.status(500).json(err);
+    });
 }
 
 function checkedTask(req, res) {
@@ -136,7 +171,9 @@ function deleteTask(req, res) {
 module.exports.create = createTask;
 module.exports.reads = readTasks;
 module.exports.readsByDay = readTasksByDay;
+module.exports.readTaskInHour = readTaskInHour;
 module.exports.read = readTask;
 module.exports.delete = deleteTask;
 module.exports.update = updateTask;
+module.exports.position = updateTaskPosition;
 module.exports.checked = checkedTask;

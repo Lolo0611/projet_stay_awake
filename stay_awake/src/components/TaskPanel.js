@@ -16,13 +16,12 @@ function TaskPanel(props) {
 
     const dragOver = e => {
         e.preventDefault();
-
     }
 
     function update() {
         var requestOptions = {method: 'GET'};
           
-          fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
+        fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
             .then(response => response.text())
             .then(result =>  {
                 console.log("Tasks:")
@@ -34,7 +33,7 @@ function TaskPanel(props) {
 
 	function expandTaskPanel() {
         update()
-		document.getElementById("container").style.width = "350px";
+        document.getElementById("container").style.width = "350px";
         document.getElementById("expandButton").style.display = "none";
 	}
 
@@ -80,14 +79,17 @@ function TaskPanel(props) {
 
                 let requestOptions = {
                     method: 'POST',
-                    body: urlencoded,
+                    body: urlencoded,  
                     redirect: 'follow'
                 };
 
                 fetch("http://localhost:3000/api/v1/createTask", requestOptions)
+                    .then(response => response.text())
                     .then(result => {
                         console.log(result)
-                        updateTasks([...tasks, result.text()])
+                        updateTasks(tasks => [...tasks, result])
+                        console.log("test ici")
+                        console.log(tasks)
                         alert("La tâche a été créée avec succès");
                     })
                     .catch(error => console.log('error', error));
@@ -133,8 +135,8 @@ function TaskPanel(props) {
                     <label htmlFor="location">Destination</label>
                     <input type="text" placeholder="Destination" id="location"/>
 
-                    <label htmlFor="duration">Durée (min)</label>
-                    <input type="number" min={0} step="15" id="duration" required/>
+                    <label htmlFor="duration">Durée (heure)</label>
+                    <input type="number" min={0} max={17} step="1" id="duration" required/>
 
                     <label htmlFor="priority">Priorité de la tâche</label>
                     <input type="number" min={1} max={3} id="priority"/>
