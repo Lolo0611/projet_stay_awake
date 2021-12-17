@@ -16,7 +16,6 @@ function TaskPanel(props) {
 
     const dragOver = e => {
         e.preventDefault();
-
     }
 
     function update() {
@@ -79,7 +78,7 @@ function TaskPanel(props) {
                     body: urlencoded,
                     redirect: 'follow'
                 };
-
+                
                 fetch("http://localhost:3000/api/v1/createTask", requestOptions)
                     .then(result => result.json())
                     .then(result => {setTasks([...tasks, result])})
