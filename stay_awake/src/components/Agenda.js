@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactAgenda, ReactAgendaCtrl, guid, Modal } from 'react-agenda';
 
 require('moment/locale/fr.js'); // this is important for traduction purpose
@@ -20,9 +20,14 @@ const drop = e => {
     card.style.display="block";
     e.target.appendChild(card);
 }
+
 const dragOver = e => {
     e.preventDefault();
 }
+
+// useEffect(() => {
+//     // Do something
+// }, [items])
 
 export default class Agenda extends React.Component {
     constructor(props) {

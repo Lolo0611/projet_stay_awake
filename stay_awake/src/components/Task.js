@@ -3,6 +3,7 @@ import "../style/Task.css";
 
 function Task(props) {
     const task = props.task
+    const items = props.items
 
     const [taskDetailPane, updateTaskDetailPane] = useState(false)
 
@@ -16,6 +17,7 @@ function Task(props) {
 
     const dragOver = e => {
         e.stopPropagation();
+        
     }
 
 	function showTaskDetail() {
@@ -69,23 +71,25 @@ function Task(props) {
  
 	return(
         <>
-        
+
             <div id={props.id} className={props.className} draggable={props.draggable} onDragStart={dragStart} onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
                 <div className='task_content'>
                 <h2 className="title">{task.title}</h2>
                 <p className="location">{task.location}</p>
 
                 {taskDetailPane &&
-                    <>
-                        <p className="description">{task.description}</p>
-                        <div className="map">Map placeholder</div>
-                        <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
-                        <button className="updateTaskButton" onClick={() => openForm()}>Modifier</button>
-                    </>
+                    <div className='details'>
+                        <p className="details-content">{task.description}</p>
+                        <div className="details-content">Map placeholder</div>
+                        <button className="details-button" onClick={() => direction()}>S'y déplacer</button>
+                        <button className="details-button" onClick={() => openForm()}>Modifier</button>
+                    </div>
                 }
                 </div>
 
             </div>
+
+            
             
         </>
 	);

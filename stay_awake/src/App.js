@@ -1,12 +1,12 @@
 import './App.css';
+import React, {useState, useEffect} from 'react';
 import TaskPanel from './components/TaskPanel';
 import Navbar from './components/Navbar';
 import Agenda from './components/Agenda';
-import Board from "./components/Board";
-import Card from "./components/Card";
-import Task from './components/Task';
 
 function App() {
+    const [items, setItems] = useState([])
+
     return ( 
         <div className = "App" >
         <div className = "App-header" >
@@ -21,11 +21,11 @@ function App() {
 
             <div className = "content-right">
             <div className = "agenda" >
-            <Agenda/>   
+            <Agenda items={items}/>   
             
             </div>
 
-        <TaskPanel/>
+        <TaskPanel items={items}/>
 
             </div>
         </div> 
