@@ -2,3 +2,8 @@ Thu, 09 Dec 2021 19:29:05 GMT | ERROR  | HTTP 404: ask for:  http://localhost:30
 Thu, 09 Dec 2021 19:29:13 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/taskByDay/2021-12-09
 Thu, 09 Dec 2021 19:30:09 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TasksByDay/2021/12/09
 Thu, 09 Dec 2021 19:30:14 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TasksByDay/2021/12/09
+Sat, 11 Dec 2021 05:18:13 GMT | ERROR  | HTTP 404: ask for:  http://localhost:3000/api/v1/TasksInHour/2021-12-11
+Sat, 11 Dec 2021 07:42:16 GMT | ERROR  | HTTP 404: ask for:  http://192.168.137.1:3000/api/v1/positionTask/61b45425b1228e48886b2d2a
+Sat, 11 Dec 2021 07:42:21 GMT | ERROR  | HTTP 404: ask for:  http://192.168.137.1:3000/api/v1/positionTask/61b45425b1228e48886b2d2a
+Sat, 11 Dec 2021 07:42:58 GMT | ERROR  | HTTP 404: ask for:  http://192.168.137.1:3000/api/v1/positionTask/61b4567bba49bd0fa42bf0c1
+Sat, 11 Dec 2021 07:44:05 GMT | ERROR  | HTTP 404: ask for:  http://192.168.137.1:3000/api/v1/positionTask/61b4567bba49bd0fa42bf0c1

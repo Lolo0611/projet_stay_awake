@@ -30,10 +30,22 @@ router.get("/Task/:id", (req, res) => {
 
 });
 
+router.get("/TaskInHour/:day", (req, res) => {
+    
+    controller.readTaskInHour(req, res);
+
+});
+
 //UPDATE
 router.put("/updateTask/:id", (req, res) => {
     
     controller.update(req, res);
+
+});
+
+router.put("/positionTask/:id", (req, res) => {
+    
+    controller.position(req, res);
 
 });
 

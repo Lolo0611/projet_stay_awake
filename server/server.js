@@ -24,20 +24,20 @@ const {loggers, transports, format} = require("winston");
 //Accessing MongoDB
 const mongoose = require('mongoose');
 
-//Accessing CORS
-const cors = require('cors');
-
 //Create an application 
 const app = express();
 
+const cors = require("cors");
+
 //used to fetch the data from forms on HTTP POST, and PUT
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+    extended : true
+  }));
+  
+app.use(bodyParser.json());
 
-//Allow CORS
-app.use(cors());
-app.options('*', cors());
-
+app.use(cors())
+  
 //Use the morgan logging 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
@@ -85,8 +85,20 @@ const connectDb = async () => {
 //Accessing the routes for the tasks
 const taskRoutes = require('./routes/task');
 
+// //Accessing the routes for the x
+// const xRoutes = require('./routes/x');
+
+// //Accessing the routes for the x
+// const xRoutes = require('./routes/x');
+
+// //Accessing the routes for the x
+// const xRoutes = require('./routes/x');
+
 //Acces the routes 
 app.use('/api/v1/', taskRoutes);
+// app.use('/api/v1/', x);
+// app.use('/api/v1/', x);
+// app.use('/api/v1/', x);
 
 //When there is no route that caught the incoming request
 //use the 404 middleware
