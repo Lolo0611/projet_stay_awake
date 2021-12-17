@@ -56,12 +56,13 @@ function Task(props) {
                 redirect: 'follow'
             };
 
-            fetch("http://localhost:3000/api/v1/updateTask/" + task.id, requestOptions)
-                .then(result => {
-                    console.log(result)
-                    alert("La tâche a été créée avec succès");
-                })
-                .catch(error => console.log('error', error));
+            console.log("id", task._id)
+
+            fetch("http://localhost:3000/api/v1/updateTask/" + task._id, requestOptions)
+            .then(response => response.json())
+            .then(result => console.log(result))    
+            .then(alert("La tâche a été modifiée avec succès"))
+            .catch(error => console.log('error', error));
     }
 
     function direction() {
@@ -86,7 +87,7 @@ function Task(props) {
                 }
             <div className="popupFormUpdate" id="popupFormUpdate">
                 <div className="formContainer">
-                    <h1 className="form_title"> Modifier d'une tâche</h1>
+                    <h1 className="form_title"> Modifier une tâche</h1>
 
                     <label htmlFor="title">Titre</label>
                     <input type="text" placeholder="Nom de la tâche" id="title" required/>
