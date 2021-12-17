@@ -1,11 +1,32 @@
-import React, {useState} from 'react';
-import axios from 'axios';
+import React, {useState, useEffect} from 'react';
 import Task from './Task';
 import "../style/TaskPanel.css";
 
-function TaskPanel() {
-    
-	const [tasks, updateTasks] = useState([]);
+function TaskPanel(props) {
+
+    const [tasks, setTasks] = useState([]);
+
+    const drop = e => {
+        e.preventDefault();
+        const card_id= e.dataTransfer.getData('card_id');
+        const card = document.getElementById(card_id);
+        card.style.display="block";
+        e.target.appendChild(card);
+    }
+
+    const dragOver = e => {
+        e.preventDefault();
+
+    }
+
+    function update() {
+        const requestOptions = {method: 'GET'};
+          
+          fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
+            .then(response => response.json())
+            .then(result => setTasks(result))
+            .catch(error => console.log('error', error))
+    }
 
 	function expandTaskPanel() {
         update()
@@ -30,75 +51,65 @@ function TaskPanel() {
         document.getElementById("permanent").value = null;
       }
       
-      function closeForm() {
+    function closeForm() {
         document.getElementById("popupForm").style.display = "none";
       }
 
     function createTask() {
         let newTask = {title: String(document.getElementById("title").value),
-                        duration: Number(document.getElementById("duration").value),
-                        location: String(document.getElementById("location").value),
-                        description: String(document.getElementById("description").value),
-                        priority: Number(document.getElementById("priority").value),
-                        permanent: Boolean(document.getElementById("permanent").value)
-                        }
-
-        console.log("New task:");
-        console.log(newTask);
-        console.log(JSON.stringify(newTask));
+            duration: Number(document.getElementById("duration").value),
+            location: String(document.getElementById("location").value),
+            description: String(document.getElementById("description").value),
+            priority: Number(document.getElementById("priority").value),
+            permanent: Boolean(document.getElementById("permanent").value)
+            }
 
         if (!!newTask.title && !!newTask.duration) {
-
             closeForm();
 
-            const config = {headers: {'Content-Type': 'application/json'}}
+            let urlencoded = new URLSearchParams();
+                urlencoded.append("title", String(document.getElementById("title").value));
+                urlencoded.append("duration", Number(document.getElementById("duration").value));
+                urlencoded.append("description", String(document.getElementById("description").value));
+                urlencoded.append("priority", Number(document.getElementById("priority").value));
+                urlencoded.append("permanent", Boolean(document.getElementById("permanent").value));
 
-            axios.post({
-                url: "http://localhost:3000/api/v1/createTask",
-                data: JSON.stringify(newTask),
-                config: config,
-                })
-                .then(() => {
-                    updateTasks([...tasks, newTask]);
-                    alert("Tâche créée avec succès");
-                })
+                let requestOptions = {
+                    method: 'POST',
+                    body: urlencoded,
+                    redirect: 'follow'
+                };
 
-            update()
+                fetch("http://localhost:3000/api/v1/createTask", requestOptions)
+                    .then(result => result.json())
+                    .then(result => {setTasks([...tasks, result])})
+                    .catch(error => console.log('error', error));
+                
+            update();
         }
 
         else {
             alert("Merci de renseigner au minimum le titre et la durée de la tâche")
         }
-    }
 
-    async function update() {
-        axios.get("http://localhost:3000/api/v1/Tasks")
-            .then(response => {
-                console.log("Tasks:")
-                console.log(response.data)
-                updateTasks(response.data);
-            })
-            .catch(err => console.log("Erreur"));
     }
-
+    
 	return(
         <>
-            <div className="taskPanel">
+            <div className="taskPanel" id={props.id} onDrop={drop} onDragOver={dragOver} className={props.className}>
                 <button id="expandButton" className="expandButton" onClick={() => expandTaskPanel()}>&#60;</button>
                 <div id="container" className="container">
                     <button className="closeButton" onClick={() => collapseTaskPanel()}>&times;</button>
-                    <div className="taskContainer">
-                        {!!tasks.length &&
-                            tasks.forEach(task => {
-                                <Task task={task}/>
+                    <div id="taskContainer" className="taskContainer">
+                        {(tasks && tasks.length > 0) 
+                        ?
+                            tasks.map((task, index) => {
+                                return <Task key={index} task={task} id="taskCard" className="taskCard" draggable="true"/>
                             })
-                        }
-
-                        {!tasks.length &&
-                            <div className="emptyDiv">Aucunes tâches à afficher</div>
+                        :
+                            <div className="emptyDiv">Aucunes tâches à afficher</div>    
                         }
                     </div>
-
                     <button className="createTaskButton" onClick={() => openForm()}>+</button>
                 </div>
             </div>

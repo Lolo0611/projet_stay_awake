@@ -5,7 +5,7 @@
     width: 50px; 
 }
 
-.taskPanel .expandButton {
+#expandButton {
     position: absolute;
     font-size: 36px;
     text-align: center;
@@ -26,7 +26,7 @@
     z-index: 1;
     right: 0;
     transform: translate(0, -50%);
-    overflow-x: hidden;
+    overflow: hidden;
     transition: 0.5s;
     background-color: #6b6e70cb;
     box-shadow: 1px 1px 6px #555;
@@ -37,7 +37,7 @@
 }
 
 .container .closeButton {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 10px;
     font-size: 36px;
@@ -55,15 +55,11 @@
 .container .taskContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    top: 50%;
-    -ms-transform: translateY(50%);
-    transform: translateY(50%);
     overflow-x: hidden;
-    width: 80%;
+    height: 75vh;
 }
 
-.container .emptyDiv {
+.taskContainer .emptyDiv {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,7 +78,7 @@
 }
 
 .container .createTaskButton {
-    position: absolute;
+    position: fixed;
     bottom: 15px;
     right: 15px;
     font-size: 36px;
