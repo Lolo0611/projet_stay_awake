@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import "../style/Task.css";
 
 function Task(props) {
-    const {title, duration, description, date} = props
+    const task = props.task
 
     const [taskDetailPane, updateTaskDetailPane] = useState(false)
 
@@ -22,43 +22,94 @@ function Task(props) {
 		updateTaskDetailPane(!taskDetailPane);
 	}
 
-    //à MAJ c'est pour mettre à jour une tâche
+    function openForm() {
+        document.getElementById("popupForm").style.display = "block";
+
+        document.getElementById("title").value = task.title;
+        document.getElementById("duration").value = task.duration;
+        document.getElementById("location").value = task.location;
+        document.getElementById("description").value = task.description;
+        document.getElementById("priority").value = task.priority;
+        document.getElementById("permanent").value = task.permanent;
+    }
+      
+    function closeForm() {
+        document.getElementById("popupForm").style.display = "none";
+    }
+
+    // NEED TO DETECT WHAT FIELDS CHANGED
     function updateTask() {
-            // var urlencoded = new URLSearchParams();
-            // urlencoded.append("Titre" , "Seconde tâche");
-            // urlencoded.append("description", "Une desription");
-            // urlencoded.append("priority", "1");
-            // var requestOptions = {
-            //     method: 'POST',
-            //     body: urlencoded,
-            //     redirect: 'follow'
-            // };
-            // fetch("http://localhost:3000/api/v1/Tasks", requestOptions)
-            //     .then(response => response.text())
-            //     .then(result => updateTaskDetailPane(result))
-            //     .catch(error => console.log('error', error));
+        closeForm();
+
+        let urlencoded = new URLSearchParams();
+            urlencoded.append("title", String(document.getElementById("title").value));
+            urlencoded.append("duration", Number(document.getElementById("duration").value));
+            urlencoded.append("description", String(document.getElementById("description").value));
+            urlencoded.append("priority", Number(document.getElementById("priority").value));
+            urlencoded.append("permanent", Boolean(document.getElementById("permanent").value));
+
+            let requestOptions = {
+                method: 'PUT',
+                body: urlencoded,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/api/v1/updateTask/" + task.id, requestOptions)
+                .then(result => {
+                    console.log(result)
+                    alert("La tâche a été créée avec succès");
+                })
+                .catch(error => console.log('error', error));
     }
 
     function direction() {
         // redirect to OSM with corresponding itinerary
         console.log("redirecting to OSM for itinerary")
     }
-
+ 
 	return(
-		<div id={props.id} className={props.className} draggable={props.draggable} onDragStart={dragStart} onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
-            <h1 className="title">{title}</h1>
-            {/* <p className="location">{location}</p> */}
+        <>
+            <div id={props.id} className={props.className} draggable={props.draggable} onDragStart={dragStart} onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
+                <h1 className="title">{task.title}</h1>
+                <p className="location">{task.location}</p>
 
-            {taskDetailPane &&
-                <>
-                    <p className="description">{description}</p>
-                    <div className="map">Map placeholder</div>
-                    <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
-                    <button className="updateTaskButton" onClick={() => updateTask()}>Modifier</button>
-                </>
-            }
+                {taskDetailPane &&
+                    <>
+                        <p className="description">{task.description}</p>
+                        <div className="map">Map placeholder</div>
+                        <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
+                        <button className="updateTaskButton" onClick={() => openForm()}>Modifier</button>
+                    </>
+                }
 
-		</div>
+            </div>
+            <div className="popupForm" id="popupForm">
+                <div className="formContainer">
+                    <h1 className="title"> Création d'une tâche</h1>
+
+                    <label htmlFor="title">Titre</label>
+                    <input type="text" placeholder="Nom de la tâche" id="title" required/>
+
+                    <label htmlFor="description">Description</label>
+                    <input type="text" placeholder="Description" id="description"/>
+
+                    <label htmlFor="location">Destination</label>
+                    <input type="text" placeholder="Destination" id="location"/>
+
+                    <label htmlFor="duration">Durée (min)</label>
+                    <input type="number" min={0} step="15" id="duration" required/>
+
+                    <label htmlFor="priority">Priorité de la tâche</label>
+                    <input type="number" min={1} max={3} id="priority"/>
+
+                    <label htmlFor="permanent">Tâche récurrente</label>
+                    <input type="checkbox" id="permanent"/>
+
+                    <button type="submit" className="addButton" onClick={() => updateTask()}>Modifier</button>
+                    <button type="button" className="cancelButton" onClick={() => closeForm()}>Annuler</button>
+                </div>
+            </div>
+        </>
 	);
 };
 

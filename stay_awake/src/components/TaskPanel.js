@@ -48,11 +48,11 @@ function TaskPanel(props) {
         document.getElementById("popupForm").style.display = "block";
 
         document.getElementById("title").value = null;
-        document.getElementById("startDate").value = null;
-        document.getElementById("endDate").value = null;
+        document.getElementById("duration").value = null;
         document.getElementById("location").value = null;
         document.getElementById("description").value = null;
         document.getElementById("priority").value = null;
+        document.getElementById("permanent").value = null;
       }
       
     function closeForm() {
@@ -110,7 +110,7 @@ function TaskPanel(props) {
                     <div id="taskContainer" className="taskContainer">
                         {!!tasks.length &&
                             tasks.forEach(task => {
-                                <Task title={task.title} duration={task.duration} id="taskCard" className="taskCard" draggable="true"> {props.children} </Task>
+                                <Task task={task} id="taskCard" className="taskCard" draggable="true"> {props.children} </Task>
                             })
                         }
                         {!tasks.length &&
