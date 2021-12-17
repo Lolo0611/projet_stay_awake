@@ -10,8 +10,8 @@ var colors = {
 }
 var now = new Date();
 
-var items = [
-];
+
+var items = []
 
 const drop = e => {
     e.preventDefault();
