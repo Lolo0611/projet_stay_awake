@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,7 +50,7 @@ public class TaskFormFragment extends DialogFragment {
         return f;
     }
 
-    public static TaskFormFragment newInstance(TaskFragment parent, @Nullable String taskId, @Nullable String taskTitle, @Nullable String taskDescription, int taskPriority) {
+    public static TaskFormFragment newInstance(TaskFragment parent, @Nullable String taskId, @Nullable String taskTitle, @Nullable String taskDescription, int taskPriority, boolean taskPermanent) {
         TaskFormFragment f = new TaskFormFragment();
 
         mParent = parent;
@@ -59,6 +60,7 @@ public class TaskFormFragment extends DialogFragment {
         if(taskTitle != null) bundle.putString("taskTitle", taskTitle);
         if(taskDescription != null) bundle.putString("taskDescription", taskDescription);
         if(taskPriority != 0) bundle.putInt("taskPriority", taskPriority);
+        bundle.putBoolean("taskPermanent", taskPermanent);
         f.setArguments(bundle);
 
         return f;
@@ -103,6 +105,7 @@ public class TaskFormFragment extends DialogFragment {
             if(getArguments().getInt("taskPriority") != 0) {
                 binding.spinnerTaskPriority.setSelection(getArguments().getInt("taskPriority") - 1);
             }
+            binding.checkBoxTaskPermanent.setChecked(getArguments().getBoolean("taskPermanent"));
         }
 
         binding.buttonClose.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +140,7 @@ public class TaskFormFragment extends DialogFragment {
                 postData.put("title", binding.editTextTaskTitle.getText());
                 postData.put("description", binding.editTextTaskDescription.getText());
                 postData.put("priority", binding.spinnerTaskPriority.getSelectedItem().toString());
+                postData.put("permanent", binding.checkBoxTaskPermanent.isChecked());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -151,6 +155,7 @@ public class TaskFormFragment extends DialogFragment {
                         mParent.refreshData();
                         hidePDialog();
                         dismiss();
+                        Toast.makeText(getActivity(), "La tâche à bien été modifiée.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -168,6 +173,7 @@ public class TaskFormFragment extends DialogFragment {
                         mParent.refreshData();
                         hidePDialog();
                         dismiss();
+                        Toast.makeText(getActivity(), "La tâche à bien été crée.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override

@@ -1,10 +1,12 @@
 package com.example.stay_awake_android;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.stay_awake_android.fragments.HomeFragment;
 import com.example.stay_awake_android.fragments.TaskFormFragment;
+import com.example.stay_awake_android.services.NotificationService;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private Intent intentNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        intentNotification = new Intent(this, NotificationService.class);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -108,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        stopService(intentNotification);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        startService(intentNotification);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

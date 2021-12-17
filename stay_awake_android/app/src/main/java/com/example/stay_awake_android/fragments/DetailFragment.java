@@ -42,7 +42,7 @@ public class DetailFragment extends DialogFragment {
     private static HomeFragment mParent;
     private FragmentDetailBinding binding;
     private String currentTaskId;
-    private final String routeUpdate = "updateTask/";
+    private final String routePosition = "positionTask/";
     private final String routeChecked = "checkedTask/";
 
     public DetailFragment() {
@@ -146,12 +146,14 @@ public class DetailFragment extends DialogFragment {
                 JSONObject postData = new JSONObject();
                 try {
                     postData.put("day", "");
+                    postData.put("hour", "");
+                    postData.put("duration", "");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 if(currentTaskId != null) {
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, AppController.url + routeUpdate + currentTaskId, postData, new Response.Listener<JSONObject>() {
+                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, AppController.url + routePosition + currentTaskId, postData, new Response.Listener<JSONObject>() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
                         public void onResponse(JSONObject response) {

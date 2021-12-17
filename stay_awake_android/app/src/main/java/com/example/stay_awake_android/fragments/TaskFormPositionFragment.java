@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +36,7 @@ public class TaskFormPositionFragment extends DialogFragment {
 
     private static TaskFragment mParent;
     private FragmentTaskFormPositionBinding binding;
-    private final String routeUpdate = "updateTask/";
+    private final String routeUpdate = "positionTask/";
     private String currentTaskId;
     public static TaskFormPositionFragment newInstance(TaskFragment parent, @Nullable String taskId) {
         TaskFormPositionFragment f = new TaskFormPositionFragment();
@@ -132,6 +133,7 @@ public class TaskFormPositionFragment extends DialogFragment {
                         Log.d(AppController.TAG, response.toString());
                         mParent.refreshData();
                         dismiss();
+                        Toast.makeText(getActivity(), "La tâche à bien été positionnée.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override

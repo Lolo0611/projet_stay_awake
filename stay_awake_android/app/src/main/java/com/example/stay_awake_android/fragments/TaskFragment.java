@@ -1,8 +1,6 @@
 package com.example.stay_awake_android.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,15 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,12 +26,16 @@ import com.example.stay_awake_android.R;
 import com.example.stay_awake_android.adapters.TaskRecyclerViewAdapter;
 import com.example.stay_awake_android.databinding.FragmentTaskListBinding;
 import com.example.stay_awake_android.models.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -71,7 +71,6 @@ public class TaskFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -93,8 +92,6 @@ public class TaskFragment extends Fragment {
         getActivity().findViewById(R.id.button_taskAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //NavHostFragment.findNavController(TaskFragment.this)
-                        //.navigate(R.id.action_TaskFragment_to_TaskFormFragment);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 DialogFragment newFragment = TaskFormFragment.newInstance(TaskFragment.this);
                 newFragment.show(fragmentManager, "dialog");
@@ -127,12 +124,11 @@ public class TaskFragment extends Fragment {
                                 JSONObject obj = response.getJSONObject(i);
                                 Task task = new Task();
 
-                                task.setId(obj.getString("_id"));
-                                task.setTitle(obj.getString("title"));
-                                task.setDescription(obj.getString("description"));
-                                //task.setDate(LocalDateTime.parse(obj.getString("Date")));
-                                //task.setDuration(LocalDateTime.parse(obj.getString("Duration")));
-                                task.setPriority(Integer.parseInt(obj.getString("priority")));
+                                if(obj.has("_id")) task.setId(obj.getString("_id"));
+                                if(obj.has("title")) task.setTitle(obj.getString("title"));
+                                if(obj.has("description")) task.setDescription(obj.getString("description"));
+                                if(obj.has("priority")) task.setPriority(Integer.parseInt(obj.getString("priority")));
+                                if(obj.has("permanent")) task.setPermanent(obj.getBoolean("permanent"));
 
                                 taskList.add(task);
 
@@ -144,14 +140,39 @@ public class TaskFragment extends Fragment {
                         if(Objects.nonNull(binding.taskList)) {
                             binding.taskList.getAdapter().notifyDataSetChanged();
                         }
+                        //saveData();
                     }
                 }, new Response.ErrorListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(AppController.TAG, "Error: " + error.getMessage());
+                /*restoreData();
+                if(Objects.nonNull(binding.taskList)) {
+                    binding.taskList.getAdapter().notifyDataSetChanged();
+                }*/
             }
         });
 
         AppController.getInstance().addToRequestQueue(tasksReq);
+    }
+
+    public void saveData() {
+        Gson gson = new Gson();
+        String json = gson.toJson(taskList);
+        AppController.editor.putString(route, json);
+        AppController.editor.apply();
+    }
+
+    public void restoreData() {
+        Toast.makeText(getActivity(), "Tâches restorées.", Toast.LENGTH_SHORT).show();
+
+        String serializedObject = AppController.sharedPreferences.getString(route, null);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<Task>>(){}.getType();
+            taskList = gson.fromJson(serializedObject, type);
+        }
     }
 }

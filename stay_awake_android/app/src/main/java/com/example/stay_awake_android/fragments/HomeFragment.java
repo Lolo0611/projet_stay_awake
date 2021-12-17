@@ -115,17 +115,18 @@ public class HomeFragment extends Fragment {
                                 JSONObject obj = response.getJSONObject(i);
                                 Task task = new Task();
 
-                                task.setId(obj.getString("_id"));
-                                task.setTitle(obj.getString("title"));
-                                task.setDescription(obj.getString("description"));
-                                task.setDay(LocalDate.parse(obj.getString("day")));
-                                task.setHour(obj.getString("hour"));
-                                task.setDuration(Integer.parseInt(obj.getString("duration")));
-                                task.setPriority(Integer.parseInt(obj.getString("priority")));
-                                task.setChecked(Boolean.parseBoolean(obj.getString("checked")));
+                                if(!obj.getString("day").equals("null")) {
+                                    task.setId(obj.getString("_id"));
+                                    task.setTitle(obj.getString("title"));
+                                    task.setDescription(obj.getString("description"));
+                                    task.setDay(LocalDate.parse(obj.getString("day")));
+                                    task.setHour(obj.getString("hour"));
+                                    task.setDuration(Integer.parseInt(obj.getString("duration")));
+                                    task.setPriority(Integer.parseInt(obj.getString("priority")));
+                                    task.setChecked(Boolean.parseBoolean(obj.getString("checked")));
 
-                                taskList.add(task);
-
+                                    taskList.add(task);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

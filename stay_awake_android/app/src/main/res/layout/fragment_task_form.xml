@@ -16,12 +16,12 @@
         android:id="@+id/button_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="x"
         android:paddingHorizontal="16dp"
+        android:text="x"
         android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/textView_title"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_title"
@@ -30,11 +30,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:textAppearance="?attr/textAppearanceBody1"
         android:text="@string/prompt_title"
+        android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_close"/>
+        app:layout_constraintTop_toBottomOf="@+id/button_close" />
 
     <EditText
         android:id="@+id/editText_taskTitle"
@@ -50,7 +50,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView_title" />
 
     <TextView
         android:id="@+id/textView_description"
@@ -59,11 +59,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:textAppearance="?attr/textAppearanceBody1"
         android:text="@string/prompt_description"
+        android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_taskTitle"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText_taskTitle" />
 
     <EditText
         android:id="@+id/editText_taskDescription"
@@ -88,11 +88,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:textAppearance="?attr/textAppearanceBody1"
         android:text="@string/priority"
+        android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_taskDescription"/>
+        app:layout_constraintTop_toBottomOf="@+id/editText_taskDescription" />
 
     <Spinner
         android:id="@+id/spinner_taskPriority"
@@ -106,11 +106,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_priority" />
 
+    <CheckBox
+        android:id="@+id/checkBox_taskPermanent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Tâche permanente ?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_taskPriority" />
+
     <Button
         android:id="@+id/button_ValidateTaskForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="4dp"
         android:backgroundTint="@color/purple_500"
         android:text="@string/validate"
         android:textColor="@color/white"

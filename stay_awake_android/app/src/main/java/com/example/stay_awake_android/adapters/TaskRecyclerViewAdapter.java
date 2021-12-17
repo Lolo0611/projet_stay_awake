@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -108,7 +109,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
 
     private void onItemClick(Task item) {
         FragmentManager fragmentManager = mFragment.getActivity().getSupportFragmentManager();
-        DialogFragment newFragment = TaskFormFragment.newInstance(mFragment, item.getId(), item.getTitle(), item.getDescription(), item.getPriority());
+        DialogFragment newFragment = TaskFormFragment.newInstance(mFragment, item.getId(), item.getTitle(), item.getDescription(), item.getPriority(), item.isPermanent());
         newFragment.show(fragmentManager, "dialog");
     }
 
@@ -127,6 +128,7 @@ public class TaskRecyclerViewAdapter extends RecyclerView.Adapter<TaskRecyclerVi
                         Snackbar.make(mFragment.getView(), "La tâche à bien été supprimée.", Snackbar.LENGTH_LONG)
                                 .setAction("Suppression", null).show();
                         mFragment.refreshData();
+                        Toast.makeText(mFragment.getActivity(), "La tâche à bien été supprimée.", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
