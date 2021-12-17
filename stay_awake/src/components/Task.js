@@ -66,22 +66,12 @@ function Task(props) {
                 redirect: 'follow'
             };
 
-<<<<<<< HEAD
             fetch("http://localhost:3000/api/v1/updateTask/:" + task.id, requestOptions)
                 .then(result => {
                     console.log(result)
                     alert("La tâche a été créée avec succès");
                 })
                 .catch(error => console.log('error', error));
-=======
-            console.log("id", task._id)
-
-            fetch("http://localhost:3000/api/v1/updateTask/" + task._id, requestOptions)
-            .then(response => response.json())
-            .then(result => console.log(result))    
-            .then(alert("La tâche a été modifiée avec succès"))
-            .catch(error => console.log('error', error));
->>>>>>> a38229bbfa7a6a6b0696fb625797275bd2cb624e
     }
 
     function direction() {
@@ -91,56 +81,49 @@ function Task(props) {
  
 	return(
         <>
-<<<<<<< HEAD
-
-=======
->>>>>>> a38229bbfa7a6a6b0696fb625797275bd2cb624e
             <div id={props.id} className={props.className} draggable={props.draggable} onDragStart={dragStart} onDragOver={dragOver} className="task" onClick={() => showTaskDetail()}>
                 <div className='task_content'>
-                <h2 className="title">{task.title}</h2>
-                <p className="location">{task.location}</p>
 
-                {taskDetailPane &&
-                    <div className='details'>
-                        <p className="details-content">{task.description}</p>
-                        <div className="details-content">Map placeholder</div>
-                        <button className="details-button" onClick={() => direction()}>S'y déplacer</button>
-                        <button className="details-button" onClick={() => openForm()}>Modifier</button>
+                    <h2 className="title">{task.title}</h2>
+                    <p className="location">{task.location}</p>
+
+                    {taskDetailPane &&
+                        <div className='details'>
+                            <p className="details-content">{task.description}</p>
+                            <div className="details-content">Map placeholder</div>
+                            <button className="details-button" onClick={() => direction()}>S'y déplacer</button>
+                            <button className="details-button" onClick={() => openForm()}>Modifier</button>
+                        </div>
+                    }
+
+                    <div className="popupFormUpdate" id="popupFormUpdate">
+                        <div className="formContainer">
+                            <h1 className="form_title"> Modifier une tâche</h1>
+
+                            <label htmlFor="title">Titre</label>
+                            <input type="text" placeholder="Nom de la tâche" id="title" required/>
+
+                            <label htmlFor="description">Description</label>
+                            <input type="text" placeholder="Description" id="description"/>
+
+                            <label htmlFor="location">Destination</label>
+                            <input type="text" placeholder="Destination" id="location"/>
+
+                            <label htmlFor="duration">Durée</label>
+                            <input type="number" min={0} max={17} step="1" id="duration" required/>
+
+                            <label htmlFor="priority">Priorité de la tâche</label>
+                            <input type="number" min={1} max={3} id="priority"/>
+
+                            <label htmlFor="permanent">Tâche récurrente</label>
+                            <input type="checkbox" id="permanent"/>
+
+                            <button type="submit" className="addButton" onClick={() => updateTask()}>Modifier</button>
+                            <button type="button" className="cancelButton" onClick={() => closeForm()}>Annuler</button>
+                        </div>
                     </div>
-                }
-            <div className="popupFormUpdate" id="popupFormUpdate">
-                <div className="formContainer">
-                    <h1 className="form_title"> Modifier une tâche</h1>
-
-                    <label htmlFor="title">Titre</label>
-                    <input type="text" placeholder="Nom de la tâche" id="title" required/>
-
-                    <label htmlFor="description">Description</label>
-                    <input type="text" placeholder="Description" id="description"/>
-
-                    <label htmlFor="location">Destination</label>
-                    <input type="text" placeholder="Destination" id="location"/>
-
-                    <label htmlFor="duration">Durée (min)</label>
-                    <input type="number" min={0} step="15" id="duration" required/>
-
-                    <label htmlFor="priority">Priorité de la tâche</label>
-                    <input type="number" min={1} max={3} id="priority"/>
-
-                    <label htmlFor="permanent">Tâche récurrente</label>
-                    <input type="checkbox" id="permanent"/>
-
-                    <button type="submit" className="addButton" onClick={() => updateTask()}>Modifier</button>
-                    <button type="button" className="cancelButton" onClick={() => closeForm()}>Annuler</button>
                 </div>
-
-            </div>
-                </div>
-
-            </div>
-
-            
-            
+            </div> 
         </>
 	);
 };

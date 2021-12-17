@@ -127,8 +127,8 @@ function TaskPanel(props) {
                     <label htmlFor="location">Destination</label>
                     <input type="text" placeholder="Destination" id="location"/>
 
-                    <label htmlFor="duration">Durée (min)</label>
-                    <input type="number" min={0} step="15" id="duration" required/>
+                    <label htmlFor="duration">Durée</label>
+                    <input type="number" min={0} max={17} step="1" id="duration" required/>
 
                     <label htmlFor="priority">Priorité de la tâche</label>
                     <input type="number" min={1} max={3} id="priority"/>
