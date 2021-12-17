@@ -43,16 +43,35 @@ export default class Agenda extends React.Component {
         this.handleRangeSelection = this.handleRangeSelection.bind(this)
     }
 
-    componentDidMount() {
+    componentDidUpdate() {
         let startDateTime = new Date(String(this.handleCellSelection).replace('-', '/').replace('T', ' '))
+        console.log("Date:")
+        console.log(String(this.handleCellSelection()).replace('-', '/').replace('T', ' '))
         this.state.items.startDateTime = startDateTime
         this.state.items.endDateTime = startDateTime.setHours(startDateTime.getHours() + this.state.items.duration)
 
-        delete this.state.items.duration
-    }
+        console.log("Items dates:")
+        console.log(this.state.items.startDateTime)
+        console.log(this.state.items.endDateTime)
 
-    componentDidUpdate() {
-        // Do something
+        delete this.state.items.duration
+
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("day", startDateTime.toLocaleDateString());
+        urlencoded.append("hour", startDateTime.toLocaleTimeString());
+
+        let requestOptions = {
+            method: 'PUT',
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/api/v1/updateTask/:" + this.state.items.idTask, requestOptions)
+            .then(result => {
+                console.log(result)
+                alert("La tâche a été m avec succès");
+            })
+            .catch(error => console.log('error', error));
     }
 
     handleCellSelection(item) {

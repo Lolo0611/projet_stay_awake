@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {guid} from 'react-agenda';
 import "../style/Task.css";
 
@@ -19,8 +19,10 @@ function Task(props) {
     const dragOver = e => {
         e.stopPropagation();
 
+        // Multiplies to infinity
         let item = {
-            _id :guid(),
+            _id : guid(),
+            idTask : task._id,
             name : task.title,
             startDateTime : "",
             endDateTime : "",
@@ -29,6 +31,10 @@ function Task(props) {
 
         props.setItems([...items, item])
     }
+
+    useEffect(() => {
+        // Need to update dates here
+    })
 
 	function showTaskDetail() {
 		updateTaskDetailPane(!taskDetailPane);
@@ -69,7 +75,7 @@ function Task(props) {
             fetch("http://localhost:3000/api/v1/updateTask/:" + task.id, requestOptions)
                 .then(result => {
                     console.log(result)
-                    alert("La tâche a été créée avec succès");
+                    alert("La tâche a été modifiée avec succès");
                 })
                 .catch(error => console.log('error', error));
     }
