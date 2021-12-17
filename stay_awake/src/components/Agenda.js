@@ -8,6 +8,7 @@ var colors = {
     "color-2": "rgba(242, 177, 52, 1)",
     "color-3": "rgba(235, 85, 59, 1)"
 }
+
 var now = new Date();
 
 const drop = e => {
