@@ -4,8 +4,7 @@ import "../style/TaskPanel.css";
 
 function TaskPanel(props) {
 
-    let [tasks, updateTasks] = useState([]);
-    tasks.length += 1
+    const [tasks, updateTasks] = useState([]);
 
     const drop = e => {
         e.preventDefault();
@@ -28,7 +27,7 @@ function TaskPanel(props) {
             .then(result =>  {
                 console.log("Tasks:")
                 console.log(result)
-                updateTasks(result)
+                updateTasks([...tasks, result])
             })
             .catch(error => console.log('error', error));
     }
@@ -109,7 +108,7 @@ function TaskPanel(props) {
                 <div id="container" className="container">
                     <button className="closeButton" onClick={() => collapseTaskPanel()}>&times;</button>
                     <div id="taskContainer" className="taskContainer">
-                        {tasks.length &&
+                        {!!tasks.length &&
                             tasks.forEach(task => {
                                 <Task title={task.title} duration={task.duration} id="taskCard" className="taskCard" draggable="true"> {props.children} </Task>
                             })
