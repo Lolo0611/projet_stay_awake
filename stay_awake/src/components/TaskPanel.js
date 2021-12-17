@@ -103,7 +103,9 @@ function TaskPanel(props) {
                         {(tasks && tasks.length > 0) 
                         ?
                             tasks.map((task, index) => {
+
                                 return <Task key={index} task={task} id={index} items={props.items} setItems={props.setItems} className="taskCard" draggable="true"/>
+
                             })
                         :
                             <div className="emptyDiv">Aucunes tâches à afficher</div>    
