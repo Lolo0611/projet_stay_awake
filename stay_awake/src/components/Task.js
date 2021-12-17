@@ -76,16 +76,18 @@ function Task(props) {
                 <p className="location">{task.location}</p>
 
                 {taskDetailPane &&
-                    <>
-                        <p className="description">{task.description}</p>
-                        <div className="map">Map placeholder</div>
-                        <button className="itineraryButton" onClick={() => direction()}>S'y déplacer</button>
-                        <button className="updateTaskButton" onClick={() => openForm()}>Modifier</button>
-                    </>
+                    <div className='details'>
+                        <p className="details-content">{task.description}</p>
+                        <div className="details-content">Map placeholder</div>
+                        <button className="details-button" onClick={() => direction()}>S'y déplacer</button>
+                        <button className="details-button" onClick={() => openForm()}>Modifier</button>
+                    </div>
                 }
                 </div>
 
             </div>
+
+            
             
         </>
 	);
